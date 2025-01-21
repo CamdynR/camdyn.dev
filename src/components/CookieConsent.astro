@@ -64,14 +64,16 @@
   cookie-consent {
     background-color: white;
     bottom: 0;
+    box-sizing: border-box;
     column-gap: 1.5ch;
     display: grid;
     filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.25));
     grid-template-columns: 1fr auto;
-    min-height: 100px;
-    padding: 1ch 1.5ch;
+    min-height: 125px;
+    padding: 1ch max(1.5ch, calc((100dvw - var(--content-width)) / 2));
     place-items: center;
     position: fixed;
+    width: 100%;
 
     p {
       margin: 0;
