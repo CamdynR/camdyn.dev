@@ -3,37 +3,43 @@ import HeaderLink from './HeaderLink.astro';
 ---
 
 <header>
-  <nav class='font-serif'>
-    <HeaderLink href='/'>Home</HeaderLink>
-    <HeaderLink href='/blog'>Blog</HeaderLink>
-    <HeaderLink href='/photos'>Photos</HeaderLink>
-    <HeaderLink href='/music'>Music</HeaderLink>
-    <HeaderLink href='/about'>About</HeaderLink>
+  <nav aria-label='main' class='font-serif'>
+    <ul>
+      <li><HeaderLink href='/'>Home</HeaderLink></li>
+      <li><HeaderLink href='/blog'>Blog</HeaderLink></li>
+      <li><HeaderLink href='/photos'>Photos</HeaderLink></li>
+      <li><HeaderLink href='/music'>Music</HeaderLink></li>
+    </ul>
   </nav>
   <button id='theme-toggle' title='Change Theme'></button>
 </header>
 <style>
   header {
     box-shadow: 0 2px 8px rgba(var(--black), 5%);
-    margin: 2rem 0 0 0;
-    padding: 0 var(--content-width-padding);
+    box-sizing: content-box;
+    margin: 2rem auto 0 auto;
+    max-width: var(--content-width);
+    padding: 0 var(--content-padding);
   }
 
-  nav {
+  nav ul {
     align-items: center;
     display: flex;
     gap: 1.5rem;
-  }
+    list-style-type: none;
+    padding: 0;
 
-  nav a {
-    border-bottom: 4px solid transparent;
-    color: var(--black);
-    text-decoration: none;
-  }
+    a {
+      border-bottom: 4px solid transparent;
+      color: var(--black);
+      text-decoration: none;
 
-  nav a.active {
-    text-decoration: none;
-    border-bottom-color: var(--accent);
+      &.active,
+      &:hover {
+        text-decoration: none;
+        border-bottom-color: var(--accent);
+      }
+    }
   }
 
   #theme-toggle {
@@ -53,7 +59,7 @@ import HeaderLink from './HeaderLink.astro';
       align-items: center;
       display: flex;
       gap: 1.5rem;
-      justify-content: center;
+      justify-content: space-between;
     }
 
     nav {
