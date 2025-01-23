@@ -16,11 +16,11 @@ class SpotifySong extends HTMLElement {
 
     let markup = document.createElement('template');
     markup.innerHTML = /* HTML */ `
-      <a href="Play on Spotify" id="album-art-link" target="_blank">
+      <a title="Play on Spotify" id="album-art-link" target="_blank">
         <img id="album-art" src="" alt="" height="120" width="120" />
       </a>
       <song-metadata>
-        <a id="song-title" href="" target="blank"></a>
+        <a id="song-title" href="" title="Play on Spotify" target="blank"></a>
         <p id="artists-wrapper">
           <span id="preview" class="tag">Preview</span>
           <span id="artists"></span>
@@ -197,7 +197,7 @@ class SpotifySong extends HTMLElement {
     styles.innerHTML = /* CSS */ `
       :host {
         align-items: center;
-        background-color: rgb(31, 31, 31);
+        background-color: #1f1f1f;
         border-radius: 0.75rem;
         display: grid;
         font-family: sans-serif;
