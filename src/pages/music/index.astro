@@ -12,6 +12,8 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     <!-- Load Music Web Components -->
     <script type='module' src='../web-components/SpotifyArtist.js'></script>
+    <script type='module' src='../web-components/SpotifyPlaylistTrack.js'
+    ></script>
     <script type='module' src='../web-components/SpotifySong.js'></script>
     <!-- Page Specific Styles -->
     <style>
@@ -51,7 +53,62 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
           art-src='/images/music/artists/Noelle_Sucks.jpeg'
           art-alt='Portrait of artist Noelle Sucks'
           spotify-href='https://open.spotify.com/artist/2kj9J1mkap7VGmtgqJi5yB'
-        ></spotify-artist> -->
+        >
+          <spotify-playlist-track
+            title='Life is Sw33t'
+            artists='Noelle Sucks'
+            preview-src='/audio/artist-spotlight/Life_is_Sw33t.mp3'
+            duration='02:57'
+            explicit></spotify-playlist-track>
+          <spotify-playlist-track
+            title='Copy Ur Keys (feat. Spencer Chamberlain of Underoath)'
+            artists='Noelle Sucks, Spencer Chamberlain'
+            preview-src='/audio/artist-spotlight/Copy_Ur_Keys.mp3'
+            duration='03:11'
+            explicit></spotify-playlist-track>
+          <spotify-playlist-track
+            title='Nonchalant'
+            artists='Noelle Sucks'
+            preview-src='/audio/artist-spotlight/Nonchalant.mp3'
+            duration='02:54'></spotify-playlist-track>
+          <spotify-playlist-track
+            title="Sorry I'm an A$$hole"
+            artists='Noelle Sucks'
+            preview-src='/audio/artist-spotlight/Sorry_Im_An_Asshole.mp3'
+            duration='02:32'
+            explicit></spotify-playlist-track>
+          <spotify-playlist-track
+            title='Nonchalant - if found remix'
+            artists='Noelle Sucks, if found'
+            preview-src='/audio/artist-spotlight/Nonchalant__if_found_remix.mp3'
+            duration='03:03'></spotify-playlist-track>
+          <spotify-playlist-track
+            title='Ugly Ugly'
+            artists='Noelle Sucks'
+            preview-src='/audio/artist-spotlight/Ugly_Ugly.mp3'
+            duration='02:59'
+            explicit></spotify-playlist-track>
+          <spotify-playlist-track
+            title="I'll Show Myself Out"
+            artists='Noelle Sucks'
+            preview-src='/audio/artist-spotlight/Ill_Show_Myself_Out.mp3'
+            duration='02:47'></spotify-playlist-track>
+          <spotify-playlist-track
+            title='Cherry'
+            artists='Noelle Sucks'
+            preview-src='/audio/artist-spotlight/Cherry.mp3'
+            duration='02:16'></spotify-playlist-track>
+          <spotify-playlist-track
+            title='Like I Died'
+            artists='Noelle Sucks'
+            preview-src='/audio/artist-spotlight/Like_I_Died.mp3'
+            duration='03:50'></spotify-playlist-track>
+          <spotify-playlist-track
+            title='Out of Orbit'
+            artists='Noelle Sucks'
+            preview-src='/audio/artist-spotlight/Out_of_Orbit.mp3'
+            duration='03:01'></spotify-playlist-track>
+        </spotify-artist> -->
       </section>
       <section>
         <h2>Top Tracks</h2>
@@ -62,7 +119,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
               artists='Basement Jaxx, 100 gecs'
               album-art-src='/images/music/albums/wheres_my_head_at.jpg'
               album-art-alt="Album cover for song 'Wheres my head at' by Basement Jaxx"
-              preview-src='/audio/wheres_your_head_at_.mp3'
+              preview-src='/audio/top-tracks/wheres_your_head_at_.mp3'
               spotify-href='https://open.spotify.com/track/1hJN8hZvzEvOvqX32jSSrw'
             ></spotify-song>
           </li>
@@ -72,7 +129,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
               artists='Deux Visages'
               album-art-src='/images/music/albums/cut_bangs.jpg'
               album-art-alt="Album cover for song 'Cut Bangs' by Deux Visages"
-              preview-src='/audio/cut_bangs.mp3'
+              preview-src='/audio/top-tracks/cut_bangs.mp3'
               spotify-href='https://open.spotify.com/track/5KQtAJK5wIHXVLlX5sl43n'
             ></spotify-song>
           </li>
@@ -82,7 +139,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
               artists='Grady'
               album-art-src='/images/music/albums/you_were_so_cool.jpg'
               album-art-alt="Album cover for song 'you were so cool' by Grady"
-              preview-src='/audio/you_were_so_cool.mp3'
+              preview-src='/audio/top-tracks/you_were_so_cool.mp3'
               spotify-href='https://open.spotify.com/track/4QNJQMRHCqqyYqZnQSAjgh'
             ></spotify-song>
           </li>
@@ -92,7 +149,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
               artists='Thee Marloes'
               album-art-src='/images/music/albums/not_today.jpg'
               album-art-alt="Album cover for song 'Not Today' by Thee Marloes"
-              preview-src='/audio/not_today.mp3'
+              preview-src='/audio/top-tracks/not_today.mp3'
               spotify-href='https://open.spotify.com/track/0La1VlmPQNwvTyJD3qIxGL'
             ></spotify-song>
           </li>
@@ -102,7 +159,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
               artists='BENEE'
               album-art-src='/images/music/albums/sad_boiii.jpg'
               album-art-alt="Album cover for song 'Sad Boiii' by BENEE"
-              preview-src='/audio/sad_boiii.mp3'
+              preview-src='/audio/top-tracks/sad_boiii.mp3'
               spotify-href='https://open.spotify.com/track/5LOUGL5zAmtxRQIJBmuUay'
             ></spotify-song>
           </li>

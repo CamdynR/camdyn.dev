@@ -112,7 +112,9 @@ class SpotifyArtist extends HTMLElement {
           </svg>
         </button>
       </artist-controls>
-      <ul id="track-list"></ul>
+      <track-list>
+        <slot></slot>
+      </track-list>
       <audio id="preview-audio" src="" hidden></audio>
     `;
 
@@ -130,7 +132,7 @@ class SpotifyArtist extends HTMLElement {
         position: relative;
       }
 
-      ul#track-list {
+      track-list {
         background-color: #121212;
         border-bottom-left-radius: 0.75rem;
         border-bottom-right-radius: 0.75rem;
