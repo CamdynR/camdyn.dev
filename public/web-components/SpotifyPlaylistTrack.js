@@ -60,6 +60,8 @@ class SpotifyPlaylistTrack extends HTMLElement {
         cursor: default;
         display: grid;
         grid-template-columns: 32px 1fr max-content;
+        height: fit-content;
+        /* overflow-x: hidden; */
         padding: 0.5rem 0;
       }
 
@@ -127,6 +129,16 @@ class SpotifyPlaylistTrack extends HTMLElement {
       }
 
       song-metadata {
+        display: block;
+        max-width: 100%;
+        overflow-x: hidden;
+        width: 100%;
+
+        * {
+          display: block;
+          width: 100%;
+        }
+
         #title {
           font-size: 0.875rem;
           line-height: 1.35;
@@ -140,7 +152,7 @@ class SpotifyPlaylistTrack extends HTMLElement {
           display: flex;
           opacity: 0.6;
 
-          #explicit-tag 
+          #explicit-tag {
             background-color: rgba(255, 255, 255, 0.7);
             border-radius: 0.125rem;
             color: #121212;
@@ -149,6 +161,7 @@ class SpotifyPlaylistTrack extends HTMLElement {
             font-weight: 600;
             margin-right: 0.65ch;
             padding: 0.04rem 0.325rem;
+            width: fit-content;
           }
 
           #artists {

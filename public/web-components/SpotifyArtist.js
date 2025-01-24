@@ -171,7 +171,11 @@ class SpotifyArtist extends HTMLElement {
       }
 
       artist-metadata {
+        align-self: center;
+        display: grid;
+        gap: 0.75rem;
         height: fit-content;
+        line-height: 1;
       }
 
       track-controls {
@@ -219,6 +223,9 @@ class SpotifyArtist extends HTMLElement {
       #artist-name {
         font-size: 1.5rem;
         font-weight: 400;
+        text-overflow: ellipsis;
+        text-wrap: nowrap;
+        overflow: hidden;
       }
 
       #top-tracks {
@@ -240,6 +247,7 @@ class SpotifyArtist extends HTMLElement {
         font-size: 0.875rem;
         padding: 0.125rem 1rem;
         transition: transform .3s ease-in-out;
+        width: fit-content;
 
         &:hover {
           text-decoration: none;
@@ -324,14 +332,43 @@ class SpotifyArtist extends HTMLElement {
           width: 112px;
         }
 
+        #follow-btn {
+          display: block;
+          margin-top: 3px;
+          width: fit-content;
+        }
+
+        #more-btn {
+          bottom: 0.75rem;
+          right: 5rem;
+        }
+
         #preview.tag {
-          bottom: 1.5rem;
-          left: 1.5rem;
+          bottom: 1rem;
+          left: 1rem;
           position: absolute;
         }
 
+        #play-preview-btn {
+          bottom: 1rem;
+          right: 1rem;
+        }
+
+        track-controls {
+          bottom: 1.25rem;
+          right: 8rem;
+        }
+
+        artist-metadata {
+          align-self: flex-end;
+          display: grid;
+          gap: 0.5rem;
+          line-height: 1;
+        }
+
         artist-controls {
-          padding-bottom: 5rem;
+          gap: 1rem;
+          padding: 1rem 1rem 4.5rem;
         }
       }
     `;
@@ -374,6 +411,9 @@ class SpotifyArtist extends HTMLElement {
         this.#ELEMS.artistName.setAttribute('href', newValue);
         this.#ELEMS.topTracks.setAttribute('href', newValue);
         this.#ELEMS.playOnSpotify.setAttribute('href', newValue);
+        // Set follow link
+        let followLink = newValue + '?intent=1';
+        this.#ELEMS.followBtn.setAttribute('href', followLink);
         break;
     }
   }
