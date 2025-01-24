@@ -3,6 +3,7 @@
 class SpotifyArtist extends HTMLElement {
   static observedAttributes = ['name', 'art-src', 'art-alt', 'spotify-href'];
   #ELEMS = {};
+  currActive;
 
   constructor() {
     super();
@@ -30,7 +31,6 @@ class SpotifyArtist extends HTMLElement {
           <svg
             data-encore-id="icon"
             role="img"
-            aria-hidden="true"
             viewBox="0 0 24 24"
             height="24"
             width="24"
@@ -72,7 +72,6 @@ class SpotifyArtist extends HTMLElement {
           <svg
             data-encore-id="icon"
             role="img"
-            aria-hidden="true"
             viewBox="0 0 24 24"
             height="24"
             width="24"
@@ -86,7 +85,6 @@ class SpotifyArtist extends HTMLElement {
           <svg
             data-encore-id="icon"
             role="img"
-            aria-hidden="true"
             id="play-svg"
             viewBox="0 0 24 24"
             height="48"
@@ -99,12 +97,10 @@ class SpotifyArtist extends HTMLElement {
           <svg
             data-encore-id="icon"
             role="img"
-            aria-hidden="true"
             id="pause-svg"
             viewBox="0 0 24 24"
             height="32"
             width="32"
-            hidden
           >
             <path
               d="M5.7 3a.7.7 0 0 0-.7.7v16.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V3.7a.7.7 0 0 0-.7-.7H5.7zm10 0a.7.7 0 0 0-.7.7v16.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V3.7a.7.7 0 0 0-.7-.7h-2.6z"
@@ -112,10 +108,11 @@ class SpotifyArtist extends HTMLElement {
           </svg>
         </button>
       </artist-controls>
-      <track-list>
-        <slot></slot>
-      </track-list>
-      <audio id="preview-audio" src="" hidden></audio>
+      <track-list-wrapper>
+        <track-list>
+          <slot></slot>
+        </track-list>
+      </track-list-wrapper>
     `;
 
     let styles = document.createElement('style');
@@ -132,20 +129,26 @@ class SpotifyArtist extends HTMLElement {
         position: relative;
       }
 
-      track-list {
+      track-list-wrapper {
         background-color: #121212;
         border-bottom-left-radius: 0.75rem;
         border-bottom-right-radius: 0.75rem;
-        display: grid;
-        height: 152px;
-        margin: 0;
-        overflow: scroll;
-        padding: 0.5rem 0.5rem 0;
+        display: block;
 
-        ::slotted(spotify-playlist-track) {
-          background-color: transparent;
-          box-sizing: border-box;
-          width: 100%;
+        track-list {
+          display: grid;
+          height: 152px;
+          margin: 0 0.5rem 0 0;
+          overflow-y: scroll;
+          padding: 0.5rem 0 0.5rem 0.5rem;
+          scrollbar-color: #0000004d #0000;
+  
+          ::slotted(spotify-playlist-track) {
+            background-color: transparent;
+            box-sizing: border-box;
+            margin-right: 0.5rem;
+            width: calc(100% - 0.5rem);
+          }
         }
       }
 
@@ -182,6 +185,7 @@ class SpotifyArtist extends HTMLElement {
         button {
           cursor: pointer;
           height: 16px;
+          opacity: 0.7;
           padding: 0;
           width: 16px;
         }
@@ -268,8 +272,10 @@ class SpotifyArtist extends HTMLElement {
 
       #play-preview-btn {
         bottom: 1.5rem;
+        display: grid;
         height: 48px;
         padding: 0;
+        place-items: center;
         right: 1.5rem;
         transition: 33ms ease transform;
         width: 48px;
@@ -277,6 +283,24 @@ class SpotifyArtist extends HTMLElement {
         &:hover {
           transform: scale(1.04);
           transition: 33ms ease transform;
+        }
+
+        #play-svg {
+          display: block;
+        }
+
+        #pause-svg {
+          display: none;
+        }
+      }
+
+      :host(.playing) {
+        #play-svg {
+          display: none !important;
+        }
+
+        #pause-svg {
+          display: block !important;
         }
       }
 
@@ -292,6 +316,24 @@ class SpotifyArtist extends HTMLElement {
       [hidden] {
         display: none !important;
       }
+
+      @media (max-width: 540px) {
+        #art,
+        #art-link {
+          height: 112px;
+          width: 112px;
+        }
+
+        #preview.tag {
+          bottom: 1.5rem;
+          left: 1.5rem;
+          position: absolute;
+        }
+
+        artist-controls {
+          padding-bottom: 5rem;
+        }
+      }
     `;
 
     this.attachShadow({ mode: 'open' });
@@ -305,10 +347,13 @@ class SpotifyArtist extends HTMLElement {
     this.#ELEMS.topTracks = root.querySelector('#top-tracks');
     this.#ELEMS.followBtn = root.querySelector('#follow-btn');
     this.#ELEMS.playOnSpotify = root.querySelector('#play-on-spotify');
+    this.#ELEMS.trackList = root.querySelector('track-list');
+    this.#ELEMS.nextTrack = root.querySelector('#next-track');
+    this.#ELEMS.prevTrack = root.querySelector('#prev-track');
+    this.#ELEMS.moreBtn = root.querySelector('#more-btn');
     this.#ELEMS.playPreviewBtn = root.querySelector('#play-preview-btn');
     this.#ELEMS.playSVG = root.querySelector('#play-svg');
     this.#ELEMS.pauseSVG = root.querySelector('#pause-svg');
-    this.#ELEMS.previewAudio = root.querySelector('#preview-audio');
 
     this.#attachEventListeners();
   }
@@ -335,15 +380,60 @@ class SpotifyArtist extends HTMLElement {
 
   #attachEventListeners() {
     this.#ELEMS.playPreviewBtn.addEventListener('click', () => {
-      this.#ELEMS.playSVG.toggleAttribute('hidden');
-      this.#ELEMS.pauseSVG.toggleAttribute('hidden');
-
-      if (this.#ELEMS.playSVG.hasAttribute('hidden')) {
-        this.#ELEMS.previewAudio.play();
+      if (!this.classList.contains('playing')) {
+        this.playTrack();
       } else {
-        this.#ELEMS.previewAudio.pause();
+        this.pauseTrack();
       }
     });
+
+    this.#ELEMS.nextTrack.addEventListener('click', () => {
+      let next = this.currActive.nextElementSibling;
+      if (!next) next = this.children[0];
+      next.playTrack();
+
+      let offset = next.offsetTop - this.#ELEMS.trackList.offsetTop;
+      offset -= this.#ELEMS.trackList.clientHeight;
+      offset += next.offsetHeight;
+      this.#ELEMS.trackList.scrollTo({
+        top: offset,
+        behavior: 'smooth'
+      });
+    });
+
+    this.#ELEMS.prevTrack.addEventListener('click', () => {
+      let prev = this.currActive.previousElementSibling;
+      if (!prev) prev = [...this.children].at(-1);
+      prev.playTrack();
+      prev.scrollIntoView();
+    });
+
+    this.addEventListener('spotify-playlist-track-active', (e) => {
+      this.currActive = e.target;
+      this.#ELEMS.nextTrack.removeAttribute('disabled');
+      this.#ELEMS.prevTrack.removeAttribute('disabled');
+    });
+
+    this.addEventListener('spotify-playlist-track-playing', (e) => {
+      this.classList.add('playing');
+    });
+
+    this.addEventListener('spotify-playlist-track-paused', (e) => {
+      this.classList.remove('playing');
+    });
+
+    this.addEventListener('spotify-playlist-track-ended', (e) => {
+      this.classList.remove('playing');
+    });
+  }
+
+  playTrack() {
+    if (this.currActive) this.currActive.playTrack();
+    else this.children[0]?.playTrack();
+  }
+
+  pauseTrack() {
+    this.currActive.pauseTrack();
   }
 }
 

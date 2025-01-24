@@ -11,11 +11,11 @@ class SpotifyPlaylistTrack extends HTMLElement {
     markup.innerHTML = /* HTML */ `
       <p id="ordinal">
         <svg
-          id="play-icon"
+          id="play-svg"
           data-encore-id="icon"
           role="img"
           aria-hidden="true"
-          data-testid="play-icon"
+          data-testid="play-svg"
           viewBox="0 0 16 16"
           height="16"
           width="16"
@@ -25,11 +25,11 @@ class SpotifyPlaylistTrack extends HTMLElement {
           ></path>
         </svg>
         <svg
-          id="pause-icon"
+          id="pause-svg"
           data-encore-id="icon"
           role="img"
           aria-hidden="true"
-          data-testid="pause-icon"
+          data-testid="pause-svg"
           viewBox="0 0 16 16"
           height="16"
           width="16"
@@ -70,22 +70,22 @@ class SpotifyPlaylistTrack extends HTMLElement {
           font-weight: bold;
         }
 
-        #play-icon {
+        #play-svg {
           display: block !important;
         }
 
-        #pause-icon,
+        #pause-svg,
         #ordinal-text {
           display: none !important;
         }
       }
 
       :host(.active.playing) {
-        #pause-icon {
+        #pause-svg {
           display: block !important;
         }
 
-        #play-icon,
+        #play-svg,
         #ordinal-text {
           display: none !important;
         }
@@ -95,7 +95,7 @@ class SpotifyPlaylistTrack extends HTMLElement {
         background-color: #ffffff1a !important;
 
         #ordinal {
-          #play-icon {
+          #play-svg {
             display: block;
           }
 
@@ -119,8 +119,8 @@ class SpotifyPlaylistTrack extends HTMLElement {
         opacity: 0.6;
         place-self: center;
 
-        #play-icon,
-        #pause-icon {
+        #play-svg,
+        #pause-svg {
           display: none;
           fill: white;
         }
@@ -129,9 +129,10 @@ class SpotifyPlaylistTrack extends HTMLElement {
       song-metadata {
         #title {
           font-size: 0.875rem;
-          line-height: 1.3;
+          line-height: 1.35;
           text-overflow: ellipsis;
           text-wrap: nowrap;
+          overflow: hidden;
         }
   
         #artists-wrapper {
@@ -162,7 +163,7 @@ class SpotifyPlaylistTrack extends HTMLElement {
         font-size: 0.875rem;
         font-weight: 200;
         opacity: 0.6;
-        padding: 0 1rem 0 0.5rem;
+        padding: 0 0.5rem;
       }
     `;
 
@@ -172,7 +173,6 @@ class SpotifyPlaylistTrack extends HTMLElement {
     // Query Elements for Later Reference
     let root = this.shadowRoot;
     this.#ELEMS.ordinalText = root.querySelector('#ordinal-text');
-    this.#ELEMS.playIcon = root.querySelector('#play-icon');
     this.#ELEMS.songTitle = root.querySelector('#title');
     this.#ELEMS.artists = root.querySelector('#artists');
     this.#ELEMS.duration = root.querySelector('#duration');
@@ -210,21 +210,27 @@ class SpotifyPlaylistTrack extends HTMLElement {
 
   #attachEventListeners() {
     this.addEventListener('click', () => {
-      this.classList.add('active');
-      this.classList.toggle('playing');
-
       if (this.classList.contains('playing')) {
-        this.#ELEMS.previewAudio.play();
+        this.pauseTrack();
       } else {
-        this.#ELEMS.previewAudio.pause();
+        this.playTrack();
       }
+    });
 
-      let event = new CustomEvent('spotify-playlist-track-active', {
+    this.#ELEMS.previewAudio.addEventListener('ended', () => {
+      // Reset time to zero
+      this.#ELEMS.previewAudio.currentTime = 0;
+      // Show paused state
+      this.classList.add('paused');
+      this.classList.remove('playing');
+      // Signal end event
+      let endEvent = new CustomEvent('spotify-playlist-track-ended', {
         bubbles: true,
         composed: true
       });
-      this.dispatchEvent(event);
+      this.dispatchEvent(endEvent);
     });
+
     window.addEventListener('spotify-playlist-track-active', (e) => {
       if (e.target === this) return;
       this.classList.remove('active');
@@ -232,6 +238,44 @@ class SpotifyPlaylistTrack extends HTMLElement {
       this.classList.remove('paused');
       this.#ELEMS.previewAudio.pause();
     });
+  }
+
+  playTrack() {
+    this.classList.add('active');
+    this.classList.add('playing');
+    this.classList.remove('paused');
+    this.#ELEMS.previewAudio.play();
+
+    let playEvent = new CustomEvent('spotify-playlist-track-playing', {
+      bubbles: true,
+      composed: true
+    });
+    this.dispatchEvent(playEvent);
+
+    let activeEvent = new CustomEvent('spotify-playlist-track-active', {
+      bubbles: true,
+      composed: true
+    });
+    this.dispatchEvent(activeEvent);
+  }
+
+  pauseTrack() {
+    this.classList.add('active');
+    this.classList.add('paused');
+    this.classList.remove('playing');
+    this.#ELEMS.previewAudio.pause();
+
+    let pauseEvent = new CustomEvent('spotify-playlist-track-paused', {
+      bubbles: true,
+      composed: true
+    });
+    this.dispatchEvent(pauseEvent);
+
+    let activeEvent = new CustomEvent('spotify-playlist-track-active', {
+      bubbles: true,
+      composed: true
+    });
+    this.dispatchEvent(activeEvent);
   }
 }
 
