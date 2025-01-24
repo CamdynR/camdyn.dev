@@ -514,6 +514,12 @@ class SpotifySong extends HTMLElement {
         this.#ELEMS.moreCopyLinkBtnText.innerText = 'Copy Link';
       }, 2000);
     });
+
+    this.#ELEMS.previewAudio.addEventListener('ended', () => {
+      this.#ELEMS.previewAudio.currentTime = 0;
+      this.#ELEMS.playSVG.removeAttribute('hidden');
+      this.#ELEMS.pauseSVG.setAttribute('hidden', '');
+    });
   }
 }
 

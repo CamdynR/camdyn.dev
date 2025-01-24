@@ -136,9 +136,17 @@ class SpotifyArtist extends HTMLElement {
         background-color: #121212;
         border-bottom-left-radius: 0.75rem;
         border-bottom-right-radius: 0.75rem;
+        display: grid;
         height: 152px;
         margin: 0;
-        padding: 0 0.5rem;
+        overflow: scroll;
+        padding: 0.5rem 0.5rem 0;
+
+        ::slotted(spotify-playlist-track) {
+          background-color: transparent;
+          box-sizing: border-box;
+          width: 100%;
+        }
       }
 
       a {
