@@ -140,7 +140,7 @@ class SpotifyPlaylistTrack extends HTMLElement {
           display: flex;
           opacity: 0.6;
 
-          #explicit-tag {
+          #explicit-tag 
             background-color: rgba(255, 255, 255, 0.7);
             border-radius: 0.125rem;
             color: #121212;
