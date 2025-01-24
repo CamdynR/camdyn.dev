@@ -212,10 +212,12 @@ class SpotifySong extends HTMLElement {
       #play-preview-btn {
         cursor: pointer;
         position: absolute;
+      }
 
-        svg {
-          fill: white;
-        }
+      #play-on-spotify svg,
+      #more-btn svg,
+      #play-preview-btn svg {
+        fill: white;
       }
 
       #play-on-spotify {
@@ -228,11 +230,11 @@ class SpotifySong extends HTMLElement {
         right: 1rem;
         padding: 0;
         transition: 33ms ease transform;
+      }
 
-        &:hover {
-          transform: scale(1.04);
-          transition: 33ms ease transform;
-        }
+      #play-preview-btn:hover {
+        transform: scale(1.04);
+        transition: 33ms ease transform;
       }
 
       #more-btn {
@@ -243,16 +245,16 @@ class SpotifySong extends HTMLElement {
 
       #album-art-link {
         height: 120px;
+      }
 
-        #album-art {
-          border-radius: 0.5rem;
-          transition: 0.3s ease opacity;
-  
-          &:hover {
-            opacity: 0.8;
-            transition: 0.4s ease opacity;
-          }
-        }
+      #album-art {
+        border-radius: 0.5rem;
+        transition: 0.3s ease opacity;
+      }
+
+      #album-art:hover {
+        opacity: 0.8;
+        transition: 0.4s ease opacity;
       }
 
       #song-title {
@@ -260,10 +262,10 @@ class SpotifySong extends HTMLElement {
         font-size: 0.875rem;
         font-weight: 700;
         text-decoration: none;
+      }
 
-        &:hover {
-          text-decoration: underline;
-        }
+      #song-title:hover {
+        text-decoration: underline;
       }
 
       #artists {
@@ -291,21 +293,21 @@ class SpotifySong extends HTMLElement {
         opacity: 0.7;
         padding: 0;
         text-decoration: none;
-        transition: transform .3s ease-in-out;
+        transition: transform 0.3s ease-in-out;
         width: fit-content;
+      }
 
-        &:hover {
-          transform: scale(1.04);
-          transition: transform .3s ease-in-out;
-        }
+      #save-on-spotify:hover {
+        transform: scale(1.04);
+        transition: transform 0.3s ease-in-out;
+      }
 
-        span {
-          margin-top: 2px;
-        }
+      #save-on-spotify span {
+        margin-top: 2px;
+      }
 
-        svg {
-          fill: white;
-        }
+      #save-on-spotify svg {
+        fill: white;
       }
 
       button {
@@ -337,8 +339,7 @@ class SpotifySong extends HTMLElement {
       more-menu-overlay {
         background-color: #1c1c1c;
         border-radius: 0.75rem;
-        display: flex;
-        flex-direction: column;
+        display: grid;
         height: 100%;
         font-size: 0.875rem;
         padding-top: 1rem;
@@ -346,75 +347,80 @@ class SpotifySong extends HTMLElement {
         position: absolute;
         width: 100%;
         z-index: 2;
+      }
 
-        ul {
-          list-style-type: none;
-          margin: 0;
-          padding: 0;
+      more-menu-overlay ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
 
-          a, button {
-            color: white;
-            text-decoration: none;
-  
-            &:hover {
-              text-decoration: underline;
-            }
-          }
-        }
+      more-menu-overlay ul a,
+      more-menu-overlay ul button {
+        color: white;
+        font-size: inherit;
+        text-decoration: none;
+      }
 
-        #more-options {
-          display: grid;
-          gap: 0.25rem;
-          margin-bottom: 0.25rem;
-          width: 50%;
+      more-menu-overlay ul a:hover,
+      more-menu-overlay ul button:hover {
+        text-decoration: underline;
+      }
 
-          li {
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 0.25rem;
-            height: 2rem;
-            padding: 0 0.5rem;
+      more-menu-overlay #more-options {
+        display: grid;
+        gap: 0.25rem;
+        margin-bottom: 0.25rem;
+        width: 50%;
+      }
 
-            a, button {
-              align-items: center;
-              color: white;
-              cursor: pointer;
-              display: flex;
-              gap: 0.75rem;
-              height: 2rem;
-              padding: 0;
-  
-              svg {
-                fill: white;
-              }
-            }
-          }
-        }
+      more-menu-overlay #more-options li {
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 0.25rem;
+        height: 2rem;
+        padding: 0 0.5rem;
+      }
 
-        #terms-and-privacy {
-          color: #b3b3b3;
-          display: flex;
-          font-size: 0.6875rem;
-          gap: 0.5rem;
-          opacity: 0.7;
-        }
+      more-menu-overlay #more-options li a,
+      more-menu-overlay #more-options li button {
+        align-items: center;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        gap: 0.75rem;
+        height: 2rem;
+        padding: 0;
+      }
 
-        #close-more-menu {
-          cursor: pointer;
-          padding: 0.75rem;
-          position: absolute;
-          right: 0;
-          top: 0rem;
-          transition: transform 33ms linear;
+      more-menu-overlay #more-options li a svg,
+      more-menu-overlay #more-options li button svg {
+        fill: white;
+      }
 
-          &:hover {
-            transform: scale(1.04);
-            transition: transform 33ms linear;
-          }
+      more-menu-overlay #terms-and-privacy {
+        color: #b3b3b3;
+        display: flex;
+        font-size: 0.6875rem;
+        gap: 0.5rem;
+        opacity: 0.7;
+      }
 
-          svg {
-            fill: white;
-          }
-        }
+      more-menu-overlay #close-more-menu {
+        cursor: pointer;
+        padding: 0.75rem;
+        position: absolute;
+        right: 0;
+        top: 0rem;
+        transition: transform 33ms linear;
+      }
+
+      more-menu-overlay #close-more-menu:hover {
+        transform: scale(1.04);
+        transition: transform 33ms linear;
+      }
+
+      more-menu-overlay #close-more-menu svg {
+        fill: white;
       }
 
       @media (max-width: 541px) {
@@ -422,6 +428,18 @@ class SpotifySong extends HTMLElement {
         #album-art-link {
           height: 96px;
           width: 96px;
+        }
+
+        more-menu-overlay {
+          padding: 0;
+        }
+
+        more-menu-overlay #more-options {
+          margin-bottom: 0;
+        }
+
+        more-menu-overlay #terms-and-privacy {
+          display: none;
         }
       }
     `;

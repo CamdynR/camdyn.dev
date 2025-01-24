@@ -83,6 +83,7 @@
 :root {
   --content-padding: 1rem;
   --content-width: 48rem;
+  --content-width-padding: calc((100dvw - var(--content-width)) / 2);
 }
 
 /**** DARK MODE (DEFAULT) ****/

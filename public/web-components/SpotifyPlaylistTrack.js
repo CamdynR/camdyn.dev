@@ -61,50 +61,45 @@ class SpotifyPlaylistTrack extends HTMLElement {
         display: grid;
         grid-template-columns: 32px 1fr max-content;
         height: fit-content;
-        /* overflow-x: hidden; */
         padding: 0.5rem 0;
       }
 
       :host(.active) {
         background-color: rgba(0, 0, 0, 0.2) !important;
-
-        #title {
-          font-weight: bold;
-        }
-
-        #play-svg {
-          display: block !important;
-        }
-
-        #pause-svg,
-        #ordinal-text {
-          display: none !important;
-        }
       }
 
-      :host(.active.playing) {
-        #pause-svg {
-          display: block !important;
-        }
+      :host(.active) #title {
+        font-weight: bold;
+      }
 
-        #play-svg,
-        #ordinal-text {
-          display: none !important;
-        }
+      :host(.active) #play-svg {
+        display: block !important;
+      }
+
+      :host(.active) #pause-svg,
+      :host(.active) #ordinal-text {
+        display: none !important;
+      }
+
+      :host(.active.playing) #pause-svg {
+        display: block !important;
+      }
+
+      :host(.active.playing) #play-svg,
+      :host(.active.playing) #ordinal-text {
+        display: none !important;
       }
 
       :host(:hover) {
         background-color: #ffffff1a !important;
+      }
 
-        #ordinal {
-          #play-svg {
-            display: block;
-          }
+      :host(:hover) #ordinal #play-svg {
+        display: block;
+      }
 
-          #ordinal-text {
-            display: none;
-          }
-        }
+      :host(:hover) #ordinal #ordinal-text {
+        display: none;
       }
 
       :host([explicit]) #explicit-tag {
@@ -120,12 +115,12 @@ class SpotifyPlaylistTrack extends HTMLElement {
         font-weight: 200;
         opacity: 0.6;
         place-self: center;
+      }
 
-        #play-svg,
-        #pause-svg {
-          display: none;
-          fill: white;
-        }
+      #ordinal #play-svg,
+      #ordinal #pause-svg {
+        display: none;
+        fill: white;
       }
 
       song-metadata {
@@ -133,42 +128,42 @@ class SpotifyPlaylistTrack extends HTMLElement {
         max-width: 100%;
         overflow-x: hidden;
         width: 100%;
+      }
 
-        * {
-          display: block;
-          width: 100%;
-        }
+      song-metadata * {
+        display: block;
+        width: 100%;
+      }
 
-        #title {
-          font-size: 0.875rem;
-          line-height: 1.35;
-          text-overflow: ellipsis;
-          text-wrap: nowrap;
-          overflow: hidden;
-        }
-  
-        #artists-wrapper {
-          align-items: center;
-          display: flex;
-          opacity: 0.6;
+      song-metadata #title {
+        font-size: 0.875rem;
+        line-height: 1.35;
+        text-overflow: ellipsis;
+        text-wrap: nowrap;
+        overflow: hidden;
+      }
 
-          #explicit-tag {
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 0.125rem;
-            color: #121212;
-            display: none;
-            font-size: 0.5625rem;
-            font-weight: 600;
-            margin-right: 0.65ch;
-            padding: 0.04rem 0.325rem;
-            width: fit-content;
-          }
+      song-metadata #artists-wrapper {
+        align-items: center;
+        display: flex;
+        opacity: 0.6;
+      }
 
-          #artists {
-            color: #b3b3b3;
-            font-size: 0.6875rem;
-          }
-        }
+      song-metadata #artists-wrapper #explicit-tag {
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 0.125rem;
+        color: #121212;
+        display: none;
+        font-size: 0.5625rem;
+        font-weight: 600;
+        margin-right: 0.65ch;
+        padding: 0.04rem 0.325rem;
+        width: fit-content;
+      }
+
+      song-metadata #artists-wrapper #artists {
+        color: #b3b3b3;
+        font-size: 0.6875rem;
       }
 
       #duration {

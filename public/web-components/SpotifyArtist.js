@@ -113,10 +113,103 @@ class SpotifyArtist extends HTMLElement {
           <slot></slot>
         </track-list>
       </track-list-wrapper>
+      <more-menu-overlay hidden>
+        <ul id="more-options">
+          <li>
+            <a href="" target="_blank" id="more-play-on-spotify">
+              <svg
+                data-encore-id="icon"
+                role="img"
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                height="24"
+                width="24"
+              >
+                <path
+                  d="M12.438 1.009C6.368.769 1.251 5.494 1.008 11.565c-.24 6.07 4.485 11.186 10.556 11.426 6.07.242 11.185-4.484 11.427-10.554.242-6.07-4.484-11.186-10.553-11.428Zm4.644 16.114a.657.657 0 0 1-.897.246 13.22 13.22 0 0 0-4.71-1.602 13.197 13.197 0 0 0-4.968.242.658.658 0 0 1-.31-1.278 14.497 14.497 0 0 1 5.46-.265c1.837.257 3.579.851 5.177 1.76.315.178.425.58.246.896l.002.002Zm1.445-2.887a.853.853 0 0 1-1.158.344 16.214 16.214 0 0 0-5.475-1.797 16.188 16.188 0 0 0-5.758.219.855.855 0 0 1-1.018-.65.852.852 0 0 1 .65-1.018 17.92 17.92 0 0 1 6.362-.241 17.87 17.87 0 0 1 6.049 1.985c.415.224.57.743.344 1.158h.004Zm1.602-3.255a1.052 1.052 0 0 1-1.418.448 19.673 19.673 0 0 0-6.341-2.025 19.642 19.642 0 0 0-6.655.199 1.05 1.05 0 1 1-.417-2.06 21.725 21.725 0 0 1 7.364-.22 21.72 21.72 0 0 1 7.019 2.24c.515.268.715.903.448 1.418Z"
+                ></path>
+              </svg>
+              <span>Play on Spotify</span>
+            </a>
+          </li>
+          <li>
+            <a href="" target="_blank" id="more-save-on-spotify">
+              <svg
+                data-encore-id="icon"
+                role="img"
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                height="24"
+                width="24"
+              >
+                <path
+                  d="M11.999 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm-11 9c0-6.075 4.925-11 11-11s11 4.925 11 11-4.925 11-11 11-11-4.925-11-11z"
+                ></path>
+                <path
+                  d="M17.999 12a1 1 0 0 1-1 1h-4v4a1 1 0 1 1-2 0v-4h-4a1 1 0 1 1 0-2h4V7a1 1 0 1 1 2 0v4h4a1 1 0 0 1 1 1z"
+                ></path>
+              </svg>
+              <span>Save on Spotify</span>
+            </a>
+          </li>
+          <li>
+            <button id="more-copy-link-btn">
+              <svg
+                data-encore-id="icon"
+                role="img"
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                height="24"
+                width="24"
+              >
+                <path
+                  d="M18.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM15 5.5a3.5 3.5 0 1 1 1.006 2.455L9 12l7.006 4.045a3.5 3.5 0 1 1-.938 1.768l-6.67-3.85a3.5 3.5 0 1 1 0-3.924l6.67-3.852A3.513 3.513 0 0 1 15 5.5zm-9.5 5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm13 6.5a1.5 1.5 0 1 0-.001 3 1.5 1.5 0 0 0 .001-3z"
+                ></path>
+              </svg>
+              <span>Copy Link</span>
+            </button>
+          </li>
+        </ul>
+        <ul id="terms-and-privacy">
+          <li>
+            <a
+              href="https://www.spotify.com/us/legal/privacy-policy/"
+              target="_blank"
+              >Privacy Policy</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.spotify.com/us/legal/end-user-agreement/"
+              target="_blank"
+              >Terms &amp; Conditions</a
+            >
+          </li>
+        </ul>
+        <button id="close-more-menu" title="Close Options">
+          <svg
+            data-encore-id="icon"
+            role="img"
+            aria-hidden="true"
+            class="Svg-sc-ytk21e-0 bneLcE e-9541-icon"
+            viewBox="0 0 24 24"
+            height="24"
+            width="24"
+          >
+            <path
+              d="M3.293 3.293a1 1 0 0 1 1.414 0L12 10.586l7.293-7.293a1 1 0 1 1 1.414 1.414L13.414 12l7.293 7.293a1 1 0 0 1-1.414 1.414L12 13.414l-7.293 7.293a1 1 0 0 1-1.414-1.414L10.586 12 3.293 4.707a1 1 0 0 1 0-1.414z"
+            ></path>
+          </svg>
+        </button>
+      </more-menu-overlay>
     `;
 
     let styles = document.createElement('style');
     styles.innerHTML = /* CSS */ `
+      :host {
+        position: relative;
+      }
+    
       artist-controls {
         align-items: center;
         background-color: #1f1f1f;
@@ -134,31 +227,31 @@ class SpotifyArtist extends HTMLElement {
         border-bottom-left-radius: 0.75rem;
         border-bottom-right-radius: 0.75rem;
         display: block;
+      }
 
-        track-list {
-          display: grid;
-          height: 152px;
-          margin: 0 0.5rem 0 0;
-          overflow-y: scroll;
-          padding: 0.5rem 0 0.5rem 0.5rem;
-          scrollbar-color: #0000004d #0000;
-  
-          ::slotted(spotify-playlist-track) {
-            background-color: transparent;
-            box-sizing: border-box;
-            margin-right: 0.5rem;
-            width: calc(100% - 0.5rem);
-          }
-        }
+      track-list {
+        display: grid;
+        height: 152px;
+        margin: 0 0.5rem 0 0;
+        overflow-y: scroll;
+        padding: 0.5rem 0 0.5rem 0.5rem;
+        scrollbar-color: #0000004d #0000;
+      }
+
+      track-list ::slotted(spotify-playlist-track) {
+        background-color: transparent;
+        box-sizing: border-box;
+        margin-right: 0.5rem;
+        width: calc(100% - 0.5rem);
       }
 
       a {
         color: white;
         text-decoration: none;
+      }
 
-        &:hover {
-          text-decoration: underline;
-        }
+      a:hover {
+        text-decoration: underline;
       }
 
       button {
@@ -185,23 +278,23 @@ class SpotifyArtist extends HTMLElement {
         height: fit-content;
         position: absolute;
         right: 8.5rem;
+      }
 
-        button {
-          cursor: pointer;
-          height: 16px;
-          opacity: 0.7;
-          padding: 0;
-          width: 16px;
-        }
+      track-controls button {
+        cursor: pointer;
+        height: 16px;
+        opacity: 0.7;
+        padding: 0;
+        width: 16px;
+      }
 
-        button[disabled] {
-          cursor: not-allowed;
-          opacity: 0.3;
-        }
+      track-controls button[disabled] {
+        cursor: not-allowed;
+        opacity: 0.3;
+      }
 
-        svg {
-          fill: white;
-        }
+      track-controls svg {
+        fill: white;
       }
 
       #art,
@@ -213,11 +306,11 @@ class SpotifyArtist extends HTMLElement {
       #art {
         border-radius: 0.75rem;
         transition: 0.3s ease opacity;
-  
-        &:hover {
-          opacity: 0.8;
-          transition: 0.4s ease opacity;
-        }
+      }
+
+      #art:hover {
+        opacity: 0.8;
+        transition: 0.4s ease opacity;
       }
 
       #artist-name {
@@ -246,14 +339,14 @@ class SpotifyArtist extends HTMLElement {
         border-radius: 0.25rem;
         font-size: 0.875rem;
         padding: 0.125rem 1rem;
-        transition: transform .3s ease-in-out;
+        transition: transform 0.3s ease-in-out;
         width: fit-content;
+      }
 
-        &:hover {
-          text-decoration: none;
-          transform: scale(1.04);
-          transition: transform .3s ease-in-out;
-        }
+      #follow-btn:hover {
+        text-decoration: none;
+        transform: scale(1.04);
+        transition: transform 0.3s ease-in-out;
       }
 
       #play-on-spotify,
@@ -261,10 +354,12 @@ class SpotifyArtist extends HTMLElement {
       #play-preview-btn {
         cursor: pointer;
         position: absolute;
+      }
 
-        svg {
-          fill: white;
-        }
+      #play-on-spotify svg,
+      #more-btn svg,
+      #play-preview-btn svg {
+        fill: white;
       }
 
       #play-on-spotify {
@@ -287,29 +382,27 @@ class SpotifyArtist extends HTMLElement {
         right: 1.5rem;
         transition: 33ms ease transform;
         width: 48px;
-
-        &:hover {
-          transform: scale(1.04);
-          transition: 33ms ease transform;
-        }
-
-        #play-svg {
-          display: block;
-        }
-
-        #pause-svg {
-          display: none;
-        }
       }
 
-      :host(.playing) {
-        #play-svg {
-          display: none !important;
-        }
+      #play-preview-btn:hover {
+        transform: scale(1.04);
+        transition: 33ms ease transform;
+      }
 
-        #pause-svg {
-          display: block !important;
-        }
+      #play-preview-btn #play-svg {
+        display: block;
+      }
+
+      #play-preview-btn #pause-svg {
+        display: none;
+      }
+
+      :host(.playing) #play-preview-btn #play-svg {
+        display: none !important;
+      }
+
+      :host(.playing) #play-preview-btn #pause-svg {
+        display: block !important;
       }
 
       .tag {
@@ -323,6 +416,97 @@ class SpotifyArtist extends HTMLElement {
 
       [hidden] {
         display: none !important;
+      }
+
+      more-menu-overlay {
+        background-color: #1c1c1c;
+        border-radius: 0.75rem;
+        display: grid;
+        height: 100%;
+        font-size: 0.875rem;
+        place-items: center;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 2;
+      }
+
+      more-menu-overlay ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      more-menu-overlay ul a,
+      more-menu-overlay ul button {
+        color: white;
+        font-size: inherit;
+        text-decoration: none;
+      }
+
+      more-menu-overlay ul a:hover,
+      more-menu-overlay ul button:hover {
+        text-decoration: underline;
+      }
+
+      more-menu-overlay #more-options {
+        display: grid;
+        gap: 0.25rem;
+        margin-bottom: 0.25rem;
+        width: 50%;
+      }
+
+      more-menu-overlay #more-options li {
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 0.25rem;
+        display: grid;
+        height: 52px;
+        padding: 0 0.5rem;
+      }
+
+      more-menu-overlay #more-options li a,
+      more-menu-overlay #more-options li button {
+        align-items: center;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        gap: 0.75rem;
+        height: 2rem;
+        padding: 0;
+      }
+
+      more-menu-overlay #more-options li a svg,
+      more-menu-overlay #more-options li button svg {
+        fill: white;
+      }
+
+      more-menu-overlay #terms-and-privacy {
+        bottom: 1.5rem;
+        color: #b3b3b3;
+        display: flex;
+        font-size: 0.6875rem;
+        gap: 0.5rem;
+        opacity: 0.7;
+        position: absolute;
+      }
+
+      more-menu-overlay #close-more-menu {
+        cursor: pointer;
+        padding: 1rem;
+        position: absolute;
+        right: 0;
+        top: 0rem;
+        transition: transform 33ms linear;
+      }
+
+      more-menu-overlay #close-more-menu:hover {
+        transform: scale(1.04);
+        transition: transform 33ms linear;
+      }
+
+      more-menu-overlay #close-more-menu svg {
+        fill: white;
       }
 
       @media (max-width: 540px) {
@@ -391,6 +575,14 @@ class SpotifyArtist extends HTMLElement {
     this.#ELEMS.playPreviewBtn = root.querySelector('#play-preview-btn');
     this.#ELEMS.playSVG = root.querySelector('#play-svg');
     this.#ELEMS.pauseSVG = root.querySelector('#pause-svg');
+    this.#ELEMS.moreMenu = root.querySelector('more-menu-overlay');
+    this.#ELEMS.morePlayOnSpotify = root.querySelector('#more-play-on-spotify');
+    this.#ELEMS.moreSaveOnSpotify = root.querySelector('#more-save-on-spotify');
+    this.#ELEMS.moreCopyLinkBtn = root.querySelector('#more-copy-link-btn');
+    this.#ELEMS.moreCopyLinkBtnText = root.querySelector(
+      '#more-copy-link-btn span'
+    );
+    this.#ELEMS.closeMoreMenu = root.querySelector('#close-more-menu');
 
     this.#attachEventListeners();
   }
@@ -411,9 +603,12 @@ class SpotifyArtist extends HTMLElement {
         this.#ELEMS.artistName.setAttribute('href', newValue);
         this.#ELEMS.topTracks.setAttribute('href', newValue);
         this.#ELEMS.playOnSpotify.setAttribute('href', newValue);
+        this.#ELEMS.morePlayOnSpotify.setAttribute('href', newValue);
+        this.#ELEMS.moreCopyLinkBtn.setAttribute('data-href', newValue);
         // Set follow link
         let followLink = newValue + '?intent=1';
         this.#ELEMS.followBtn.setAttribute('href', followLink);
+        this.#ELEMS.saveOnSpotify.setAttribute('href', followLink);
         break;
     }
   }
@@ -446,6 +641,24 @@ class SpotifyArtist extends HTMLElement {
       if (!prev) prev = [...this.children].at(-1);
       prev.playTrack();
       prev.scrollIntoView();
+    });
+
+    this.#ELEMS.moreBtn.addEventListener('click', () => {
+      this.#ELEMS.moreMenu.removeAttribute('hidden');
+    });
+
+    this.#ELEMS.closeMoreMenu.addEventListener('click', () => {
+      this.#ELEMS.moreMenu.setAttribute('hidden', '');
+    });
+
+    this.#ELEMS.moreCopyLinkBtn.addEventListener('click', () => {
+      let link = this.#ELEMS.moreCopyLinkBtn.dataset.href;
+      navigator.clipboard.writeText(link);
+      this.#ELEMS.moreCopyLinkBtnText.innerText = 'Copied to clipboard';
+
+      setTimeout(() => {
+        this.#ELEMS.moreCopyLinkBtnText.innerText = 'Copy Link';
+      }, 2000);
     });
 
     this.addEventListener('spotify-playlist-track-active', (e) => {
