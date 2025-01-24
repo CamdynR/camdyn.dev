@@ -207,6 +207,7 @@ class SpotifyArtist extends HTMLElement {
     let styles = document.createElement('style');
     styles.innerHTML = /* CSS */ `
       :host {
+        display: grid;
         position: relative;
       }
     
@@ -424,6 +425,7 @@ class SpotifyArtist extends HTMLElement {
         display: grid;
         height: 100%;
         font-size: 0.875rem;
+        left: 0;
         place-items: center;
         position: absolute;
         top: 0;
