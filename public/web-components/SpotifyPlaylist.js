@@ -684,7 +684,14 @@ class SpotifyPlaylist extends HTMLElement {
       let prev = this.currActive.previousElementSibling;
       if (!prev) prev = [...this.children].at(-1);
       prev.playTrack();
-      prev.scrollIntoView();
+
+      let offset = prev.offsetTop - this.#ELEMS.trackList.offsetTop;
+      offset -= this.#ELEMS.trackList.clientHeight;
+      offset += prev.offsetHeight;
+      this.#ELEMS.trackList.scrollTo({
+        top: offset,
+        behavior: 'smooth'
+      });
     });
 
     this.#ELEMS.moreBtn.addEventListener('click', () => {

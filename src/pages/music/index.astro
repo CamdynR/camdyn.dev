@@ -11,10 +11,11 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     <!-- Load Music Web Components -->
-    <script type='module' src='../web-components/SpotifyArtist.js'></script>
-    <script type='module' src='../web-components/SpotifyPlaylist.js'></script>
     <script type='module' src='../web-components/SpotifyPlaylistTrack.js'
     ></script>
+    <script type='module' src='../web-components/SpotifyArtist.js'></script>
+    <script type='module' src='../web-components/SpotifyPlaylist.js'></script>
+    <script type='module' src='../web-components/SpotifyAlbum.js'></script>
     <script type='module' src='../web-components/SpotifySong.js'></script>
     <!-- Page Specific Styles -->
     <style>
@@ -103,13 +104,86 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
         </spotify-artist>
       </section>
       <section>
+        <h2>Top Playlist</h2>
+        <spotify-playlist
+          title='Sunshine and Flowers'
+          username='Camdyn Rasque'
+          username-href='https://open.spotify.com/user/camdynrasque'
+          art-src='/images/music/playlists/Sunshine_and_Flowers.jpeg'
+          art-alt="A few album covers from Camdyn's 'Sunshine and Flowers' playlist"
+          spotify-href='https://open.spotify.com/playlist/1HExb8ckn5Cb4GKVplkqL3'
+        >
+          <spotify-playlist-track
+            title='On The Run'
+            artists='Salarymen'
+            preview-src='/audio/top-playlist/On_The_Run.mp3'
+            duration='4:08'></spotify-playlist-track>
+          <spotify-playlist-track
+            title='BLOOM'
+            artists='ill peach'
+            preview-src='/audio/top-playlist/BLOOM.mp3'
+            duration='3:02'></spotify-playlist-track>
+          <spotify-playlist-track
+            title='Hannah'
+            artists='Bayboards'
+            preview-src='/audio/top-playlist/Hannah.mp3'
+            duration='3:06'></spotify-playlist-track>
+          <spotify-playlist-track
+            title='Jesse'
+            artists='Hazel English, Day Wave'
+            preview-src='/audio/top-playlist/Jesse.mp3'
+            duration='2:09'></spotify-playlist-track>
+          <spotify-playlist-track
+            title='Shell'
+            artists='Ethan Tasch'
+            preview-src='/audio/top-playlist/Shell.mp3'
+            duration='2:20'></spotify-playlist-track>
+          <spotify-playlist-track
+            title='If You Run'
+            artists='Rec Hall'
+            preview-src='/audio/top-playlist/If_You_Run.mp3'
+            duration='3:16'></spotify-playlist-track>
+        </spotify-playlist>
+      </section>
+      <section>
+        <h2>Top Album</h2>
+        <spotify-album
+          title='Leap Day'
+          artists='Remember Sports'
+          art-src='/images/music/albums/Leap_Day.jpeg'
+          art-alt="Album Cover for 'Leap Day' by Remember Sports"
+          spotify-href='https://open.spotify.com/album/5bIvA0LQnYPoZNpqJAKlFw'
+        >
+          <spotify-playlist-track
+            title='Leap Day'
+            artists='Remember Sports'
+            preview-src='/audio/top-album/Leap_Day.mp3'
+            duration='2:16'></spotify-playlist-track>
+          <spotify-playlist-track
+            title='Supervise'
+            artists='Remember Sports'
+            preview-src='/audio/top-album/Supervise.mp3'
+            duration='3:39'></spotify-playlist-track>
+          <spotify-playlist-track
+            title='Ice Cream Heart'
+            artists='Remember Sports'
+            preview-src='/audio/top-album/Ice_Cream_Heart.mp3'
+            duration='2:41'></spotify-playlist-track>
+          <spotify-playlist-track
+            title='The One You Wanted'
+            artists='Remember Sports'
+            preview-src='/audio/top-album/The_One_You_Wanted.mp3'
+            duration='3:37'></spotify-playlist-track>
+        </spotify-album>
+      </section>
+      <section>
         <h2>Top Tracks</h2>
         <ol class='font-serif'>
           <li>
             <spotify-song
               title="where's my head at _"
               artists='Basement Jaxx, 100 gecs'
-              album-art-src='/images/music/albums/wheres_my_head_at.jpg'
+              album-art-src='/images/music/songs/wheres_my_head_at.jpg'
               album-art-alt="Album cover for song 'Wheres my head at' by Basement Jaxx"
               preview-src='/audio/top-tracks/wheres_your_head_at_.mp3'
               spotify-href='https://open.spotify.com/track/1hJN8hZvzEvOvqX32jSSrw'
@@ -119,7 +193,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
             <spotify-song
               title='Cut Bangs'
               artists='Deux Visages'
-              album-art-src='/images/music/albums/cut_bangs.jpg'
+              album-art-src='/images/music/songs/cut_bangs.jpg'
               album-art-alt="Album cover for song 'Cut Bangs' by Deux Visages"
               preview-src='/audio/top-tracks/cut_bangs.mp3'
               spotify-href='https://open.spotify.com/track/5KQtAJK5wIHXVLlX5sl43n'
@@ -129,7 +203,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
             <spotify-song
               title='you were so cool'
               artists='Grady'
-              album-art-src='/images/music/albums/you_were_so_cool.jpg'
+              album-art-src='/images/music/songs/you_were_so_cool.jpg'
               album-art-alt="Album cover for song 'you were so cool' by Grady"
               preview-src='/audio/top-tracks/you_were_so_cool.mp3'
               spotify-href='https://open.spotify.com/track/4QNJQMRHCqqyYqZnQSAjgh'
@@ -139,7 +213,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
             <spotify-song
               title='Not Today'
               artists='Thee Marloes'
-              album-art-src='/images/music/albums/not_today.jpg'
+              album-art-src='/images/music/songs/not_today.jpg'
               album-art-alt="Album cover for song 'Not Today' by Thee Marloes"
               preview-src='/audio/top-tracks/not_today.mp3'
               spotify-href='https://open.spotify.com/track/0La1VlmPQNwvTyJD3qIxGL'
@@ -149,7 +223,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
             <spotify-song
               title='Sad Boiii'
               artists='BENEE'
-              album-art-src='/images/music/albums/sad_boiii.jpg'
+              album-art-src='/images/music/songs/sad_boiii.jpg'
               album-art-alt="Album cover for song 'Sad Boiii' by BENEE"
               preview-src='/audio/top-tracks/sad_boiii.mp3'
               spotify-href='https://open.spotify.com/track/5LOUGL5zAmtxRQIJBmuUay'

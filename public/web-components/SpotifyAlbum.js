@@ -1,7 +1,13 @@
-// SpotifyArtist.js
+// SpotifyAlbum.js
 
-class SpotifyArtist extends HTMLElement {
-  static observedAttributes = ['name', 'art-src', 'art-alt', 'spotify-href'];
+class SpotifyAlbum extends HTMLElement {
+  static observedAttributes = [
+    'title',
+    'artists',
+    'art-src',
+    'art-alt',
+    'spotify-href'
+  ];
   #ELEMS = {};
   currActive;
 
@@ -10,23 +16,40 @@ class SpotifyArtist extends HTMLElement {
 
     let markup = document.createElement('template');
     markup.innerHTML = /* HTML */ `
-      <artist-controls>
+      <album-controls>
         <a title="Play on Spotify" id="art-link" target="_blank">
           <img id="art" src="" alt="" height="152" width="152" />
         </a>
-        <artist-metadata>
+        <album-metadata>
           <a
-            id="artist-name"
+            id="album-title"
             href=""
             title="Play on Spotify"
             target="_blank"
           ></a>
-          <p id="top-tracks-wrapper">
+          <p id="artists-wrapper">
             <span id="preview" class="tag">Preview</span>
-            <a id="top-tracks" href="" target="_blank">Top tracks</a>
+            <a id="artists" href="" target="_blank"></a>
           </p>
-          <a id="follow-btn" href="" target="_blank">Follow</a>
-        </artist-metadata>
+          <a href="" id="save-on-spotify" target="_blank">
+            <svg
+              data-encore-id="icon"
+              role="img"
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              height="24"
+              width="24"
+            >
+              <path
+                d="M11.999 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm-11 9c0-6.075 4.925-11 11-11s11 4.925 11 11-4.925 11-11 11-11-4.925-11-11z"
+              ></path>
+              <path
+                d="M17.999 12a1 1 0 0 1-1 1h-4v4a1 1 0 1 1-2 0v-4h-4a1 1 0 1 1 0-2h4V7a1 1 0 1 1 2 0v4h4a1 1 0 0 1 1 1z"
+              ></path>
+            </svg>
+            <span>Save on Spotify</span>
+          </a>
+        </album-metadata>
         <a id="play-on-spotify" href="" title="Play on Spotify" target="_blank">
           <svg
             data-encore-id="icon"
@@ -107,7 +130,7 @@ class SpotifyArtist extends HTMLElement {
             ></path>
           </svg>
         </button>
-      </artist-controls>
+      </album-controls>
       <track-list-wrapper>
         <track-list>
           <slot></slot>
@@ -133,21 +156,23 @@ class SpotifyArtist extends HTMLElement {
             </a>
           </li>
           <li>
-            <a href="" target="_blank" id="more-follow-on-spotify">
+            <a href="" target="_blank" id="more-save-on-spotify">
               <svg
                 data-encore-id="icon"
                 role="img"
                 aria-hidden="true"
-                class="Svg-sc-ytk21e-0 bneLcE e-9541-icon"
                 viewBox="0 0 24 24"
                 height="24"
                 width="24"
               >
                 <path
-                  d="M4.99 3h2.993v2H4.99v3H2.994V5H0V3h2.994V0h1.995v3zm7.288-.533a5.494 5.494 0 0 1 6.275 1.322 5.467 5.467 0 0 1 1.133 1.953c.18.532.33 1.474.277 2.378-.098 1.659-.8 3.02-1.749 4.156l-.432.52a.5.5 0 0 0 .134.752l3.59 2.077A5.002 5.002 0 0 1 24 19.955V22H4.99v-2.045a5 5 0 0 1 2.494-4.33l3.59-2.077a.5.5 0 0 0 .133-.753l-.43-.518-.002-.001c-.949-1.135-1.65-2.497-1.749-4.156-.053-.904.097-1.846.277-2.378a5.468 5.468 0 0 1 1.133-1.953 5.505 5.505 0 0 1 1.842-1.322zM14.494 4a3.503 3.503 0 0 0-2.586 1.14 3.47 3.47 0 0 0-.715 1.245c-.092.272-.213.954-.174 1.617.066 1.124.536 2.092 1.287 2.99l.001.002.433.52a2.503 2.503 0 0 1-.669 3.767l-3.589 2.076a3.001 3.001 0 0 0-1.497 2.598V20h15.02v-.045a3.002 3.002 0 0 0-1.498-2.598l-3.589-2.076a2.503 2.503 0 0 1-.669-3.766l.433-.52.002-.003c.75-.898 1.22-1.866 1.287-2.99.039-.663-.082-1.345-.174-1.617-.163-.48-.4-.9-.715-1.245A3.51 3.51 0 0 0 14.494 4z"
+                  d="M11.999 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm-11 9c0-6.075 4.925-11 11-11s11 4.925 11 11-4.925 11-11 11-11-4.925-11-11z"
+                ></path>
+                <path
+                  d="M17.999 12a1 1 0 0 1-1 1h-4v4a1 1 0 1 1-2 0v-4h-4a1 1 0 1 1 0-2h4V7a1 1 0 1 1 2 0v4h4a1 1 0 0 1 1 1z"
                 ></path>
               </svg>
-              <span>Follow on Spotify</span>
+              <span>Save on Spotify</span>
             </a>
           </li>
           <li>
@@ -209,7 +234,7 @@ class SpotifyArtist extends HTMLElement {
         position: relative;
       }
     
-      artist-controls {
+      album-controls {
         align-items: center;
         background-color: #1f1f1f;
         border-top-left-radius: 0.75rem;
@@ -262,7 +287,7 @@ class SpotifyArtist extends HTMLElement {
         margin: 0;
       }
 
-      artist-metadata {
+      album-metadata {
         align-self: center;
         display: grid;
         gap: 0.75rem;
@@ -313,7 +338,7 @@ class SpotifyArtist extends HTMLElement {
         transition: 0.4s ease opacity;
       }
 
-      #artist-name {
+      #album-title {
         font-size: 1.5rem;
         font-weight: 400;
         text-overflow: ellipsis;
@@ -321,32 +346,45 @@ class SpotifyArtist extends HTMLElement {
         overflow: hidden;
       }
 
-      #top-tracks {
+      #artists {
         color: #b3b3b3;
         font-size: 1rem;
         font-weight: 450;
         opacity: 0.7;
       }
 
-      #top-tracks-wrapper {
+      #artists-wrapper {
         align-items: center;
         display: flex;
         gap: 0.5ch;
       }
 
-      #follow-btn {
-        border: 1px solid #ffffff4d;
-        border-radius: 0.25rem;
+      #save-on-spotify {
+        align-items: center;
+        color: white;
+        cursor: pointer;
+        display: flex;
         font-size: 0.875rem;
-        padding: 0.125rem 1rem;
+        gap: 0.25rem;
+        margin: 0.4rem 0 0 0;
+        opacity: 0.7;
+        padding: 0;
+        text-decoration: none;
         transition: transform 0.3s ease-in-out;
         width: fit-content;
       }
 
-      #follow-btn:hover {
-        text-decoration: none;
+      #save-on-spotify:hover {
         transform: scale(1.04);
         transition: transform 0.3s ease-in-out;
+      }
+
+      #save-on-spotify span {
+        margin-top: 2px;
+      }
+
+      #save-on-spotify svg {
+        fill: white;
       }
 
       #play-on-spotify,
@@ -463,7 +501,7 @@ class SpotifyArtist extends HTMLElement {
         border-radius: 0.25rem;
         display: grid;
         height: 52px;
-        padding: 0 1rem;
+        padding: 0 0.5rem;
       }
 
       more-menu-overlay #more-options li a,
@@ -517,12 +555,6 @@ class SpotifyArtist extends HTMLElement {
           width: 112px;
         }
 
-        #follow-btn {
-          display: block;
-          margin-top: 3px;
-          width: fit-content;
-        }
-
         #more-btn {
           bottom: 0.75rem;
           right: 5rem;
@@ -549,25 +581,16 @@ class SpotifyArtist extends HTMLElement {
           right: 8rem;
         }
 
-        artist-metadata {
+        album-metadata {
           align-self: flex-end;
           display: grid;
           gap: 0.5rem;
           line-height: 1;
         }
 
-        artist-controls {
+        album-controls {
           gap: 1rem;
           padding: 1rem 1rem 4.5rem;
-        }
-
-        more-menu-overlay #more-options li {
-          padding: 0 0.5rem;
-        }
-
-        more-menu-overlay #more-options li a,
-        more-menu-overlay #more-options li button {
-          gap: 0.5rem;
         }
       }
     `;
@@ -579,9 +602,9 @@ class SpotifyArtist extends HTMLElement {
     let root = this.shadowRoot;
     this.#ELEMS.art = root.querySelector('#art');
     this.#ELEMS.artLink = root.querySelector('#art-link');
-    this.#ELEMS.artistName = root.querySelector('#artist-name');
-    this.#ELEMS.topTracks = root.querySelector('#top-tracks');
-    this.#ELEMS.followBtn = root.querySelector('#follow-btn');
+    this.#ELEMS.albumTitle = root.querySelector('#album-title');
+    this.#ELEMS.artists = root.querySelector('#artists');
+    this.#ELEMS.saveOnSpotify = root.querySelector('#save-on-spotify');
     this.#ELEMS.playOnSpotify = root.querySelector('#play-on-spotify');
     this.#ELEMS.trackList = root.querySelector('track-list');
     this.#ELEMS.nextTrack = root.querySelector('#next-track');
@@ -592,9 +615,7 @@ class SpotifyArtist extends HTMLElement {
     this.#ELEMS.pauseSVG = root.querySelector('#pause-svg');
     this.#ELEMS.moreMenu = root.querySelector('more-menu-overlay');
     this.#ELEMS.morePlayOnSpotify = root.querySelector('#more-play-on-spotify');
-    this.#ELEMS.moreFollowOnSpotify = root.querySelector(
-      '#more-follow-on-spotify'
-    );
+    this.#ELEMS.moreSaveOnSpotify = root.querySelector('#more-save-on-spotify');
     this.#ELEMS.moreCopyLinkBtn = root.querySelector('#more-copy-link-btn');
     this.#ELEMS.moreCopyLinkBtnText = root.querySelector(
       '#more-copy-link-btn span'
@@ -606,8 +627,11 @@ class SpotifyArtist extends HTMLElement {
 
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
-      case 'name':
-        this.#ELEMS.artistName.innerText = newValue;
+      case 'title':
+        this.#ELEMS.albumTitle.innerText = newValue;
+        break;
+      case 'artists':
+        this.#ELEMS.artists.innerText = newValue;
         break;
       case 'art-src':
         this.#ELEMS.art.setAttribute('src', newValue);
@@ -617,15 +641,14 @@ class SpotifyArtist extends HTMLElement {
         break;
       case 'spotify-href':
         this.#ELEMS.artLink.setAttribute('href', newValue);
-        this.#ELEMS.artistName.setAttribute('href', newValue);
-        this.#ELEMS.topTracks.setAttribute('href', newValue);
+        this.#ELEMS.albumTitle.setAttribute('href', newValue);
         this.#ELEMS.playOnSpotify.setAttribute('href', newValue);
         this.#ELEMS.morePlayOnSpotify.setAttribute('href', newValue);
         this.#ELEMS.moreCopyLinkBtn.setAttribute('data-href', newValue);
         // Set follow link
         let followLink = newValue + '?intent=1';
-        this.#ELEMS.followBtn.setAttribute('href', followLink);
-        this.#ELEMS.moreFollowOnSpotify.setAttribute('href', followLink);
+        this.#ELEMS.saveOnSpotify.setAttribute('href', followLink);
+        this.#ELEMS.moreSaveOnSpotify.setAttribute('href', followLink);
         break;
     }
   }
@@ -714,4 +737,4 @@ class SpotifyArtist extends HTMLElement {
   }
 }
 
-customElements.define('spotify-artist', SpotifyArtist);
+customElements.define('spotify-album', SpotifyAlbum);

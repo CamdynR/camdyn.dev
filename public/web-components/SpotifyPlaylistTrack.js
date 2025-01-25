@@ -111,6 +111,7 @@ class SpotifyPlaylistTrack extends HTMLElement {
       }
 
       #ordinal {
+        color: white;
         font-size: 0.875rem;
         font-weight: 200;
         opacity: 0.6;
@@ -136,6 +137,7 @@ class SpotifyPlaylistTrack extends HTMLElement {
       }
 
       song-metadata #title {
+        color: white;
         font-size: 0.875rem;
         line-height: 1.35;
         text-overflow: ellipsis;
@@ -167,6 +169,7 @@ class SpotifyPlaylistTrack extends HTMLElement {
       }
 
       #duration {
+        color: white;
         font-family: monospace;
         font-size: 0.875rem;
         font-weight: 200;
