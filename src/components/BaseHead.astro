@@ -58,8 +58,24 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 <meta property='twitter:image' content={new URL(image, Astro.url)} />
 
 <!-- Plausible -->
-<script
-  defer
-  data-domain='camdyn.dev'
-  src='https://analytics.camdyn.dev/js/script.js'></script>
+<script>
+  function getCookie(name: string) {
+    let v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return v ? v[2] : null;
+  }
+  (function () {
+    // Usage:
+    if (getCookie('cookie-consent') !== 'true') return;
+    (function () {
+      var u = '//analytics.camdyn.dev/';
+      var d = document,
+        g = d.createElement('script'),
+        s = d.getElementsByTagName('script')[0];
+      g.setAttribute('defer', '');
+      g.dataset.domain = 'camdyn.dev';
+      g.src = u + 'js/script.js';
+      s?.parentNode?.insertBefore(g, s);
+    })();
+  })();
+</script>
 <!-- End Plausible -->
