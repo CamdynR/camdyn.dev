@@ -1,0 +1,62 @@
+---
+import { SPOTIFY_API } from '../consts';
+import { cachedFetch } from '../scripts/cachedFetch/cachedFetch.js';
+import { fetchSpotifyImage } from '../scripts/fetchSpotifyImage.js';
+import { fetchSpotifyPreview } from '../scripts/fetchSpotifyPreview.js';
+
+interface Props {
+  date: string;
+  spotifyId: string;
+}
+const { date, spotifyId } = Astro.props;
+const ALBUM_URL = `${SPOTIFY_API}/albums/${spotifyId}`;
+
+const SPOTIFY_ACCESS_TOKEN = import.meta.env.SPOTIFY_ACCESS_TOKEN;
+const HEADERS = new Headers();
+HEADERS.append('Authorization', `Bearer ${SPOTIFY_ACCESS_TOKEN}`);
+const FETCH_CONFIG = { headers: HEADERS };
+
+// Fetch Artist Data and Image
+let albumData = await cachedFetch(ALBUM_URL, FETCH_CONFIG);
+let imageSrc = albumData.images.find((i: any) => i.width === 300).url;
+let imageFilename = `/music/${date}/${spotifyId}.jpeg`;
+await fetchSpotifyImage(imageSrc, imageFilename);
+let albumArtists = albumData.artists.map((a: any) => a.name).join(', ');
+let albumArtAlt = `Album art for ${albumData.name} by ${albumArtists}`;
+
+// Fetch Track Data and MP3s
+let tracksData = albumData.tracks.items;
+let trackFileList: Array<string> = [];
+tracksData.forEach(async (track: any) => {
+  let trackFilename = `/music/${date}/${track.id}.mp3`;
+  trackFileList.push(trackFilename);
+  await fetchSpotifyPreview(track.id, trackFilename);
+});
+---
+
+<spotify-album
+  title={albumData.name}
+  artists={albumArtists}
+  art-alt={albumArtAlt}
+  art-src={imageFilename}
+  spotify-href={albumData.external_urls.spotify}
+>
+  {
+    tracksData.map((track: any, i: number) => {
+      // Calculate duration
+      let minutes = Math.floor(track.duration_ms / 60000);
+      let seconds = Math.floor((track.duration_ms % 60000) / 1000);
+      let duration = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+      return (
+        <spotify-playlist-track
+          title={track.name}
+          artists={track.artists.map((a: any) => a.name).join(', ')}
+          preview-src={trackFileList[i]}
+          duration={duration}
+          explicit={track.explicit}
+        />
+      );
+    })
+  }
+</spotify-album>

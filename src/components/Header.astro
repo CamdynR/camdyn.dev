@@ -1,0 +1,91 @@
+---
+import HeaderLink from './HeaderLink.astro';
+---
+
+<header>
+  <nav aria-label='main' class='font-serif'>
+    <ul>
+      <li><HeaderLink href='/'>Home</HeaderLink></li>
+      <li><HeaderLink href='/blog'>Blog</HeaderLink></li>
+      <li><HeaderLink href='/photos'>Photos</HeaderLink></li>
+      <li><HeaderLink href='/music'>Music</HeaderLink></li>
+    </ul>
+  </nav>
+  <button id='theme-toggle' title='Change Theme'></button>
+</header>
+<style>
+  header {
+    box-shadow: 0 2px 8px rgba(var(--black), 5%);
+    box-sizing: content-box;
+    margin: 0 auto;
+    max-width: var(--content-width);
+    padding: 0 var(--content-padding);
+  }
+
+  nav ul {
+    align-items: center;
+    display: flex;
+    gap: 1.5rem;
+    list-style-type: none;
+    padding: 0;
+
+    a {
+      border-bottom: 4px solid transparent;
+      color: var(--black);
+      text-decoration: none;
+
+      &.active,
+      &:hover {
+        text-decoration: none;
+        border-bottom-color: var(--accent);
+      }
+    }
+  }
+
+  #theme-toggle {
+    background-color: var(--color-text-main);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+  }
+
+  @media (max-width: 475px) {
+    header {
+      align-items: center;
+      display: flex;
+      gap: 1.5rem;
+      justify-content: space-between;
+    }
+
+    nav {
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    #theme-toggle {
+      margin-top: -1ch;
+      position: initial;
+    }
+  }
+</style>
+<script>
+  // Query the theme toggle
+  let themeToggle = document.querySelector('#theme-toggle');
+
+  // Attach an event handler
+  themeToggle?.addEventListener('click', (e) => {
+    let currTheme = document.documentElement.dataset.theme;
+    if (!currTheme || currTheme === 'dark') {
+      document.documentElement.dataset.theme = 'light';
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.dataset.theme = 'dark';
+      localStorage.setItem('theme', 'dark');
+    }
+  });
+</script>

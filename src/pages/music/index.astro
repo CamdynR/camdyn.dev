@@ -1,0 +1,68 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import CookieConsent from '../../components/CookieConsent.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { render } from 'astro:content';
+import '../../styles/music.css';
+
+const posts = (await getCollection('music')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const { Content } = await render(posts[0]);
+---
+
+<!doctype html>
+<html lang='en'>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <!-- Load Music Web Components -->
+    <script type='module' src='../web-components/SpotifyPlaylistTrack.js'
+    ></script>
+    <script type='module' src='../web-components/SpotifyArtist.js'></script>
+    <script type='module' src='../web-components/SpotifyPlaylist.js'></script>
+    <script type='module' src='../web-components/SpotifyAlbum.js'></script>
+    <script type='module' src='../web-components/SpotifyTrack.js'></script>
+  </head>
+  <body>
+    <CookieConsent />
+    <Header />
+    <main class='page-content'>
+      <section>
+        <h1>{(<FormattedDate date={posts[0].data.pubDate} long />)}</h1>
+        <p>
+          A little bit of what I've been listening to this week and who I think
+          you should check out.
+        </p>
+        <Content />
+      </section>
+      <section>
+        <h2>Previous Weeks</h2>
+        {
+          posts.length > 1 ? (
+            <ul id='music-post-list'>
+              {posts
+                .filter((p, i) => i !== 0)
+                .map((post) => (
+                  <li>
+                    <a href={`/music/${post.id}/`}>
+                      <p class='date'>
+                        <FormattedDate date={post.data.pubDate} long />
+                      </p>
+                    </a>
+                  </li>
+                ))}
+            </ul>
+          ) : (
+            <p>No previous entries yet... check back soon!</p>
+          )
+        }
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>

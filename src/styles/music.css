@@ -1,0 +1,46 @@
+/* music.css */
+
+ol {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  padding: 0;
+  row-gap: 1rem;
+}
+
+h2 {
+  margin-top: 3rem;
+}
+
+spotify-artist,
+spotify-album,
+spotify-track:first-of-type,
+spotify-playlist {
+  margin-top: 1rem;
+}
+
+spotify-track:not(:first-of-type) {
+  margin-top: 1rem;
+}
+
+#music-post-list {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  row-gap: 1rem;
+  list-style-type: none;
+}
+
+#music-post-list a {
+  border: 1px solid white;
+  border-radius: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  text-decoration: none;
+  color: white;
+}
+
+#music-post-list a:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}

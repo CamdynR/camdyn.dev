@@ -1,0 +1,37 @@
+---
+pubDate: '2025-jan-26'
+description: "A little bit of what I've been listening to this week and who I think you should check out."
+artist: '2kj9J1mkap7VGmtgqJi5yB'
+album: '5bIvA0LQnYPoZNpqJAKlFw'
+tracks: '1hJN8hZvzEvOvqX32jSSrw 5KQtAJK5wIHXVLlX5sl43n 4QNJQMRHCqqyYqZnQSAjgh 0La1VlmPQNwvTyJD3qIxGL 5LOUGL5zAmtxRQIJBmuUay'
+playlist: '1HExb8ckn5Cb4GKVplkqL3'
+---
+
+import MusicArtist from '../../components/MusicArtist.astro';
+import MusicAlbum from '../../components/MusicAlbum.astro';
+import MusicTracks from '../../components/MusicTracks.astro';
+import MusicPlaylist from '../../components/MusicPlaylist.astro';
+
+## Artist Spotlight
+
+Artist spotlight description
+
+<MusicArtist date={frontmatter.pubDate} spotifyId={frontmatter.artist} />
+
+## Featured Album
+
+Featured Album description
+
+<MusicAlbum date={frontmatter.pubDate} spotifyId={frontmatter.album} />
+
+## Featured Tracks
+
+Featured Tracks description
+
+<MusicTracks date={frontmatter.pubDate} spotifyIds={frontmatter.tracks} />
+
+## Featured Playlist
+
+Featured Playlist description
+
+<MusicPlaylist date={frontmatter.pubDate} spotifyId={frontmatter.playlist} />

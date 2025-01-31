@@ -1,0 +1,28 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import CookieConsent from '../../components/CookieConsent.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+---
+
+<!doctype html>
+<html lang='en'>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <CookieConsent />
+    <Header />
+    <main class='page-content'>
+      <h1 class='font-serif' style='text-align: center'>
+        🏗️ Under Construction 🚧
+      </h1>
+      <p>
+        Just getting this blog set up and sorted. Watch your step while I sweep
+        things up a bit.
+      </p>
+    </main>
+    <Footer />
+  </body>
+</html>

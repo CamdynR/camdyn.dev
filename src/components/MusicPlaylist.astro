@@ -1,0 +1,68 @@
+---
+import { SPOTIFY_API } from '../consts';
+import { cachedFetch } from '../scripts/cachedFetch/cachedFetch.js';
+import { fetchSpotifyImage } from '../scripts/fetchSpotifyImage.js';
+import { fetchSpotifyPreview } from '../scripts/fetchSpotifyPreview.js';
+
+interface Props {
+  date: string;
+  spotifyId: string;
+}
+const { date, spotifyId } = Astro.props;
+const PLAYLIST_URL = `${SPOTIFY_API}/playlists/${spotifyId}`;
+
+const SPOTIFY_ACCESS_TOKEN = import.meta.env.SPOTIFY_ACCESS_TOKEN;
+const HEADERS = new Headers();
+HEADERS.append('Authorization', `Bearer ${SPOTIFY_ACCESS_TOKEN}`);
+const FETCH_CONFIG = { headers: HEADERS };
+
+// Fetch Artist Data and Image
+let playlistData = await cachedFetch(PLAYLIST_URL, FETCH_CONFIG);
+let playlistTitle = playlistData.name;
+let playlistOwner = playlistData.owner.display_name;
+let playlistOwnerHref = playlistData.owner.external_urls.spotify;
+let spotifyHref = playlistData.external_urls.spotify;
+
+// Fetch Playlist Cover Image
+let imageSrc = `/music/${date}/${spotifyId}.jpeg`;
+let imageUrl = playlistData.images.find((i: any) => i.width === 300).url;
+let imageAlt = `Cover art for the playlist ${playlistTitle} made by ${playlistOwner}`;
+await fetchSpotifyImage(imageUrl, imageSrc);
+
+// Fetch Track Data and MP3s
+let tracksData = playlistData.tracks.items.map((i: any) => i.track);
+let trackFileList: Array<string> = [];
+tracksData.forEach(async (track: any) => {
+  let trackFilename = `/music/${date}/${track.id}.mp3`;
+  trackFileList.push(trackFilename);
+  await fetchSpotifyPreview(track.id, trackFilename);
+});
+---
+
+<spotify-playlist
+  title={playlistTitle}
+  username={playlistOwner}
+  username-href={playlistOwnerHref}
+  art-src={imageSrc}
+  art-alt={imageAlt}
+  spotify-href={spotifyHref}
+>
+  {
+    tracksData.map((track: any, i: number) => {
+      // Calculate duration
+      let minutes = Math.floor(track.duration_ms / 60000);
+      let seconds = Math.floor((track.duration_ms % 60000) / 1000);
+      let duration = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+      return (
+        <spotify-playlist-track
+          title={track.name}
+          artists={track.artists.map((a: any) => a.name).join(', ')}
+          preview-src={trackFileList[i]}
+          duration={duration}
+          explicit={track.explicit}
+        />
+      );
+    })
+  }
+</spotify-playlist>

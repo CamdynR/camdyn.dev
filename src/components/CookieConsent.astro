@@ -1,0 +1,122 @@
+---
+
+---
+
+<cookie-consent hidden>
+  <p>
+    I use a privacy-first self-hosted analytics tool called
+    <a href='https://plausible.io/' target='_blank'>Plausible</a>
+    to gather some basic analytics for this blog. Upon consent the script will load
+    and set some cookies. All of the data is stored <strong>anonymously</strong>
+    and <strong>never shared with anyone</strong>.
+  </p>
+  <div id='cookie-consent-buttons'>
+    <button id='cookie-accept'>Accept</button>
+    <button id='cookie-reject'>Reject</button>
+  </div>
+</cookie-consent>
+
+<script>
+  let cookieConsent = document.querySelector('cookie-consent');
+  let cookieAccept = document.querySelector('#cookie-accept');
+  let cookieReject = document.querySelector('#cookie-reject');
+
+  const COOKIE_MAX_AGE = 31536000;
+  const COOKIE_PATH = '/';
+  const COOKIE_NAME = 'cookie-consent';
+
+  function setCookie(value: string | boolean) {
+    document.cookie = `${COOKIE_NAME}=${value}; max-age=${COOKIE_MAX_AGE}; path=${COOKIE_PATH}`;
+  }
+
+  if (!document.cookie.includes(COOKIE_NAME)) {
+    cookieConsent?.removeAttribute('hidden');
+  }
+
+  cookieAccept?.addEventListener('click', () => {
+    setCookie(true);
+    cookieConsent?.setAttribute('hidden', '');
+
+    var u = '//analytics.camdyn.dev/';
+    var d = document,
+      g = d.createElement('script'),
+      s = d.getElementsByTagName('script')[0];
+    g.setAttribute('defer', '');
+    g.dataset.domain = 'camdyn.dev';
+    g.src = u + 'js/script.js';
+    s?.parentNode?.insertBefore(g, s);
+  });
+  cookieReject?.addEventListener('click', () => {
+    setCookie(false);
+    cookieConsent?.setAttribute('hidden', '');
+  });
+</script>
+
+<style>
+  cookie-consent {
+    background-color: var(--color-bg-main);
+    bottom: 0;
+    border-top: 1px solid var(--color-text-main);
+    column-gap: 1.5ch;
+    display: grid;
+    filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.25));
+    grid-template-columns: 1fr auto;
+    min-height: 7.8rem;
+    padding: 1ch var(--content-width-padding);
+    place-items: center;
+    position: fixed;
+    width: 100%;
+    z-index: calc(Infinity);
+
+    p {
+      margin: 0;
+    }
+
+    #cookie-consent-buttons {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      height: 100%;
+      width: 100%;
+
+      button {
+        border: 1px solid var(--color-text-main);
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        height: fit-content;
+        line-height: 1.7;
+        padding: 0.25rem;
+        width: 200px;
+      }
+
+      #cookie-accept {
+        background-color: var(--color-text-main);
+        color: var(--color-bg-main);
+      }
+
+      #cookie-reject {
+        background-color: var(--color-bg-main);
+        color: var(--coolor-text-main);
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    cookie-consent {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+      row-gap: 1rem;
+
+      #cookie-consent-buttons {
+        row-gap: 1rem;
+
+        button {
+          display: block;
+          padding: 0.3rem 0;
+          width: 100%;
+        }
+      }
+    }
+  }
+</style>

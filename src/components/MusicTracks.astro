@@ -1,0 +1,74 @@
+---
+import { SPOTIFY_API } from '../consts';
+import { cachedFetch } from '../scripts/cachedFetch/cachedFetch.js';
+import { fetchSpotifyImage } from '../scripts/fetchSpotifyImage.js';
+import { fetchSpotifyPreview } from '../scripts/fetchSpotifyPreview.js';
+
+interface Props {
+  date: string;
+  spotifyIds: string;
+}
+const { date, spotifyIds } = Astro.props;
+
+interface TrackData {
+  title: string;
+  artists: string;
+  imageSrc: string;
+  imageAlt: string;
+  previewSrc: string;
+  spotifyHref: string;
+}
+
+let ids = spotifyIds.split(' ');
+let parsedTrackData: Array<TrackData> = [];
+for (let i = 0; i < ids.length; i++) {
+  let spotifyId = ids[i];
+
+  // Define constants
+  const TRACK_URL = `${SPOTIFY_API}/tracks/${spotifyId}`;
+  const SPOTIFY_ACCESS_TOKEN = import.meta.env.SPOTIFY_ACCESS_TOKEN;
+  const HEADERS = new Headers();
+  HEADERS.append('Authorization', `Bearer ${SPOTIFY_ACCESS_TOKEN}`);
+  const FETCH_CONFIG = { headers: HEADERS };
+
+  // Fetch Artist Data and Image
+  let trackData = await cachedFetch(TRACK_URL, FETCH_CONFIG);
+  let title = trackData.name;
+  let artists = trackData.artists.map((a: any) => a.name).join(', ');
+  let spotifyHref = trackData.external_urls.spotify;
+
+  // Fetch image
+  let imageSrc = `/music/${date}/${spotifyId}.jpeg`;
+  let imageUrl = trackData.album.images.find((i: any) => i.width === 300).url;
+  let imageAlt = `Album art for ${artists} by ${title}`;
+  await fetchSpotifyImage(imageUrl, imageSrc);
+
+  // Fetch MP3
+  let previewSrc = `/music/${date}/${trackData.id}.mp3`;
+  await fetchSpotifyPreview(trackData.id, previewSrc);
+
+  parsedTrackData.push({
+    title,
+    artists,
+    imageSrc,
+    imageAlt,
+    previewSrc,
+    spotifyHref
+  });
+}
+---
+
+{
+  parsedTrackData.map((track: any) => {
+    return (
+      <spotify-track
+        title={track.title}
+        artists={track.artists}
+        album-art-src={track.imageSrc}
+        album-art-alt={track.imageAlt}
+        preview-src={track.previewSrc}
+        spotify-href={track.spotifyHref}
+      />
+    );
+  })
+}
