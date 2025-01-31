@@ -20,6 +20,6 @@ export async function cachedFetch(url, options) {
     fetchCache[url] = data;
     let cachePath = path.resolve('./src/scripts/cachedFetch/fetchCache.json');
     fs.writeFileSync(cachePath, JSON.stringify(fetchCache));
-    return '';
+    return data;
   }
 }
