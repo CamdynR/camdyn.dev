@@ -1,5 +1,38 @@
 /* photos.css */
 
+#photo-viewer {
+  background-color: black;
+  border: none;
+  display: none;
+  height: 100%;
+  left: 0;
+  margin: 0;
+  max-height: 100dvh;
+  max-width: 100dvw;
+  padding: 0;
+  place-items: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+#photo-viewer img {
+  height: 100%;
+  max-height: 100dvh;
+  max-width: 100dvw;
+  object-fit: contain;
+  width: 100%;
+}
+
+#photo-viewer[open] {
+  display: grid;
+}
+
+html #photo-viewer[option] {
+  overflow: hidden;
+}
+
 dl {
   border: 1px solid white;
   display: grid;
@@ -30,6 +63,7 @@ dl, dt, dd {
 
 h1 {
   margin: 0;
+  width: 100%;
 }
 
 h2 {
@@ -41,17 +75,15 @@ h2:first-of-type {
 }
 
 .page-content {
+  display: grid;
+  justify-content: center;
   max-width: 100%;
 }
 
-.page-content *:not(photo-album) {
+.page-content>*:not(photo-album, picture) {
   margin-left: auto;
   margin-right: auto;
   max-width: var(--content-width);
-}
-
-photo-album {
-  margin-top: 2rem !important;
 }
 
 #post-metadata {
@@ -59,7 +91,8 @@ photo-album {
   gap: 1rem 2rem;
   grid-template-columns: 1fr 1fr;
   flex-wrap: wrap;
-  margin: 2rem auto 0 auto;
+  margin: 2rem auto 3rem auto;
+  width: 100%;
 }
 
 @media (max-width: 825px) {

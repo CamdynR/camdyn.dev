@@ -52,6 +52,11 @@ const { title, shootDates, locations, cameras, lenses, films } = Astro.props;
           <dd>{films.join(', ')}</dd>
         </dl>
       </div>
+
+      <dialog id="photo-viewer">
+        <img src="" alt="">
+      </dialog>
+
       <slot />
     </main>
     <Footer />

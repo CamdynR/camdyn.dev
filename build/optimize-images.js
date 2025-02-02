@@ -3,6 +3,7 @@ import { join, extname, basename, resolve } from 'path';
 import sharp from 'sharp';
 
 const SIZES = {
+  XL: 3000,
   L: 2000,
   M: 1000,
   S: 500,
@@ -87,12 +88,24 @@ async function processImage(filePath, outputDir) {
       await sharp(jpgPath).webp({ quality: 80 }).toFile(webpPath);
     }
   }
+
+  for (const jpgPath of jpgFilesToConvert) {
+    const avifPath = jpgPath.replace(/\.jpg$/, '.avif');
+
+    try {
+      await access(avifPath);
+      console.log(`Skipping existing AVIF: ${avifPath}`);
+    } catch {
+      console.log(`Converting ${avifPath} to AVIF...`);
+      await sharp(jpgPath).webp({ quality: 80 }).toFile(avifPath);
+    }
+  }
 }
 
 // Run script with directory argument
 const directory = process.argv[2];
 if (!directory) {
-  console.error('Usage: node resize-and-convert.mjs <directory>');
+  console.error('Usage: node optimize-images.mjs <directory>');
   process.exit(1);
 }
 
