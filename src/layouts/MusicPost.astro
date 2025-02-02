@@ -30,8 +30,8 @@ const { pubDate, description } = Astro.props;
     <Header />
     <main class='page-content'>
       <section>
-        <h1>{pubDate && <FormattedDate date={pubDate} long />}</h1>
-        {description && <p>{description}</p>}
+        <h1><FormattedDate date={pubDate} long /></h1>
+        <p>{description}</p>
       </section>
       <slot />
     </main>

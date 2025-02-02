@@ -1,0 +1,70 @@
+---
+import { PHOTOS_DIR } from '../consts';
+
+interface Props {
+  post: string;
+  index: number;
+  alt: string;
+}
+const { post, index, alt } = Astro.props;
+---
+
+<picture>
+  <source
+    srcset={`
+      ${PHOTOS_DIR}${post}/${index}_XS.webp 250px, 
+      ${PHOTOS_DIR}${post}/${index}_S.webp 500px, 
+      ${PHOTOS_DIR}${post}/${index}_M.webp 1000px, 
+      ${PHOTOS_DIR}${post}/${index}_L.webp 2000px, 
+      ${PHOTOS_DIR}${post}/${index}.webp 4000px
+    `}
+    type='image/webp'
+    sizes='(max-width: 500px) 250px, (max-width: 1000px) 500px, (max-width: 2000px) 1000px, (max-width: 4000px) 2000px, 500px'
+  />
+  <source
+    srcset={`
+      ${PHOTOS_DIR}${post}/${index}_XS.jpg 250px, 
+      ${PHOTOS_DIR}${post}/${index}_S.jpg 500px, 
+      ${PHOTOS_DIR}${post}/${index}_M.jpg 1000px, 
+      ${PHOTOS_DIR}${post}/${index}_L.jpg 2000px, 
+      ${PHOTOS_DIR}${post}/${index}.jpg 4000px
+    `}
+    type='image/jpg'
+    sizes='(max-width: 500px) 250px, (max-width: 1000px) 500px, (max-width: 2000px) 1000px, (max-width: 4000px) 2000px, 500px'
+  />
+  <img
+    src={`${PHOTOS_DIR}${post}/${index}_S.jpg`}
+    alt={alt}
+    width='500'
+    height='333'
+    loading='lazy'
+  />
+</picture>
+
+<style>
+  picture {
+    display: block;
+    height: fit-content;
+    margin: 0;
+    width: fit-content;
+  }
+
+  picture img {
+    aspect-ratio: 3 / 2;
+    display: block;
+    max-width: 500px;
+    object-fit: cover;
+    transition: 0.2s ease all;
+    vertical-align: top;
+    width: 100%;
+  }
+
+  @media (hover: hover) {
+    picture img:hover {
+      cursor: pointer;
+      filter: drop-shadow(0 0 10px rgba(0, 0, 0, 1));
+      transform: scale(1.03);
+      transition: 0.2s ease all;
+    }
+  }
+</style>

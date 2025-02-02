@@ -1,0 +1,26 @@
+---
+
+---
+
+<photo-album>
+  <slot />
+</photo-album>
+
+<style>
+  photo-album {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    list-style-type: none;
+    margin: 0 3rem;
+    padding: 0;
+  }
+
+  @media (max-width: 720px) {
+    photo-album {
+      gap: 1rem;
+      margin: 0;
+    }
+  }
+</style>

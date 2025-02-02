@@ -19,7 +19,7 @@ interface TrackData {
   spotifyHref: string;
 }
 
-let ids = spotifyIds.split(' ');
+let ids = spotifyIds;
 let parsedTrackData: Array<TrackData> = [];
 for (let i = 0; i < ids.length; i++) {
   let spotifyId = ids[i];

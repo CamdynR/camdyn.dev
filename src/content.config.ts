@@ -15,6 +15,20 @@ const blog = defineCollection({
   })
 });
 
+const photos = defineCollection({
+  // Load Markdown and MDX files in the `src/content/music/` directory.
+  loader: glob({ base: './src/content/photos', pattern: '**/*.{md,mdx}' }),
+  // Type-check frontmatter using a schema
+  schema: z.object({
+    title: z.string(),
+    shootDates: z.array(z.coerce.date()),
+    locations: z.array(z.string()),
+    cameras: z.array(z.string()),
+    lenses: z.array(z.string()).optional(),
+    films: z.array(z.string())
+  })
+});
+
 const music = defineCollection({
   // Load Markdown and MDX files in the `src/content/music/` directory.
   loader: glob({ base: './src/content/music', pattern: '**/*.{md,mdx}' }),
@@ -22,12 +36,12 @@ const music = defineCollection({
   schema: z.object({
     // Transform string to Date object
     pubDate: z.coerce.date(),
-    description: z.coerce.string(),
-    artist: z.coerce.string().optional(),
-    playlist: z.coerce.string().optional(),
-    album: z.coerce.string().optional(),
-    tracks: z.coerce.string().optional()
+    description: z.string(),
+    artist: z.string().optional(),
+    playlist: z.string().optional(),
+    album: z.string().optional(),
+    tracks: z.array(z.string()).optional()
   })
 });
 
-export const collections = { blog, music };
+export const collections = { blog, photos, music };

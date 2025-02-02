@@ -23,6 +23,7 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-public/music
+public/music/
+public/photos/
 fetchCache.json
-build/
+build/_*

@@ -4,3 +4,4 @@
 export const SITE_TITLE = 'camdyn.dev';
 export const SITE_DESCRIPTION = 'Welcome to my website!';
 export const SPOTIFY_API = 'https://api.spotify.com/v1';
+export const PHOTOS_DIR = '/photos/';
