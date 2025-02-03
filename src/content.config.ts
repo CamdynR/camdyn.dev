@@ -21,6 +21,7 @@ const photos = defineCollection({
   // Type-check frontmatter using a schema
   schema: z.object({
     title: z.string(),
+    featuredIndex: z.number(),
     shootDates: z.array(z.coerce.date()),
     locations: z.array(z.string()),
     cameras: z.array(z.string()),
