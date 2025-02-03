@@ -1,18 +1,29 @@
 ---
+import { PHOTOS_DIR } from '../consts';
 
+interface Props {
+  post: string;
+}
+const { post } = Astro.props;
+let undefinedURL = `${PHOTOS_DIR}undefined/`;
+let baseURL = `${PHOTOS_DIR}${post}/`;
+
+// Render the slot contents and inject `post`
+let html = '';
+if (Astro.slots.has('default')) {
+  html = await Astro.slots.render('default');
+  html = html.replaceAll(undefinedURL, baseURL);
+}
 ---
 
-<photo-album>
-  <slot />
-</photo-album>
+<photo-album set:html={html} />
 
 <style>
   photo-album {
     --gap: 2rem;
-    --max-columns: 3;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--gap);
+    --max-columns: 2;
+    column-gap: var(--gap);
+    display: grid;
     justify-content: center;
     list-style-type: none;
     margin: 0 var(--gap);
@@ -24,7 +35,7 @@
 
   @media (max-width: 720px) {
     photo-album {
-      gap: 1rem;
+      --gap: 1rem;
       margin: 0;
     }
   }

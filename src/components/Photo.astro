@@ -8,78 +8,117 @@ interface Props {
   feature: boolean;
   prioritize: boolean;
 }
+
 const { post, index, alt, feature, prioritize } = Astro.props;
 let baseURL = `${PHOTOS_DIR}${post}/${index}`;
 ---
 
-<picture
-  class={feature ? 'feature photo' : 'photo'}
-  data-alt={alt}
-  data-base-url={baseURL}
->
-  <source
-    srcset={`
-      ${baseURL}_XS.avif 250w, 
-      ${baseURL}_S.avif 500w, 
-      ${baseURL}_M.avif 1000w, 
-      ${baseURL}_L.avif 2000w, 
-      ${baseURL}_XL.avif 3000w, 
-      ${baseURL}.avif 4000w
-    `}
-    type='image/avif'
-    sizes={feature
-      ? '(max-width: 1800px) 80vw, 1564px'
-      : '(max-width: 500px) 100vw, 500px'}
-  />
-  <source
-    srcset={`
-      ${baseURL}_XS.webp 250w, 
-      ${baseURL}_S.webp 500w, 
-      ${baseURL}_M.webp 1000w, 
-      ${baseURL}_L.webp 2000w, 
-      ${baseURL}_XL.webp 3000w, 
-      ${baseURL}.webp 4000w
-    `}
-    type='image/webp'
-    sizes={feature
-      ? '(max-width: 1800px) 80vw, 1564px'
-      : '(max-width: 500px) 100vw, 500px'}
-  />
-  <source
-    srcset={`
-      ${baseURL}_XS.jpg 250w, 
-      ${baseURL}_S.jpg 500w, 
-      ${baseURL}_M.jpg 1000w, 
-      ${baseURL}_L.jpg 2000w, 
-      ${baseURL}_XL.jpg 3000w, 
-      ${baseURL}.jpg 4000w
-    `}
-    type='image/jpg'
-    sizes={feature
-      ? '(max-width: 1800px) 80vw, 1564px'
-      : '(max-width: 500px) 100vw, 500px'}
-  />
-  <img
-    src={`${baseURL}_${feature ? 'L' : 'S'}.jpg`}
-    alt={alt}
-    width={feature ? '1564' : '500'}
-    height={feature ? '1043' : '333'}
-    class={feature ? 'feature' : ''}
-    loading={prioritize ? 'eager' : 'lazy'}
-  />
-</picture>
+<figure>
+  <picture class='photo' data-alt={alt} data-base-url={baseURL}>
+    <source
+      srcset={`
+        ${baseURL}_XS.avif 250w, 
+        ${baseURL}_S.avif 500w, 
+        ${baseURL}_M.avif 1000w, 
+        ${baseURL}_L.avif 2000w, 
+        ${baseURL}_XL.avif 3000w, 
+        ${baseURL}.avif 4000w
+      `}
+      type='image/avif'
+      sizes={feature
+        ? '(max-width: 1200px) 100vw, 1032px'
+        : '(max-width: 500px) 100vw, 500px'}
+    />
+    <source
+      srcset={`
+        ${baseURL}_XS.webp 250w, 
+        ${baseURL}_S.webp 500w, 
+        ${baseURL}_M.webp 1000w, 
+        ${baseURL}_L.webp 2000w, 
+        ${baseURL}_XL.webp 3000w, 
+        ${baseURL}.webp 4000w
+      `}
+      type='image/webp'
+      sizes={feature
+        ? '(max-width: 1200px) 80vw, 1032px'
+        : '(max-width: 500px) 100vw, 500px'}
+    />
+    <source
+      srcset={`
+        ${baseURL}_XS.jpg 250w, 
+        ${baseURL}_S.jpg 500w, 
+        ${baseURL}_M.jpg 1000w, 
+        ${baseURL}_L.jpg 2000w, 
+        ${baseURL}_XL.jpg 3000w, 
+        ${baseURL}.jpg 4000w
+      `}
+      type='image/jpg'
+      sizes={feature
+        ? '(max-width: 1200px) 80vw, 1032px'
+        : '(max-width: 500px) 100vw, 500px'}
+    />
+    <img
+      src={`${baseURL}_${feature ? 'L' : 'S'}.jpg`}
+      alt={alt}
+      width={feature ? '1032' : '500'}
+      height={feature ? '688' : '333'}
+      class={feature ? 'feature' : ''}
+      loading={prioritize ? 'eager' : 'lazy'}
+    />
+  </picture>
+  {
+    Astro.slots.default && (
+      <figcaption>
+        <slot />
+      </figcaption>
+    )
+  }
+</figure>
 
 <style>
+  figcaption {
+    border: 1px solid white;
+    border-top-width: 0;
+    /* background-color: rgb(44, 44, 44); */
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    /* height: 100%; */
+    padding: 0.5rem;
+    text-align: center;
+    width: 500px;
+  }
+
+  figure:has(.feature) {
+    grid-column: 1 / 3;
+  }
+
+  figure:has(.feature) > figcaption {
+    width: 100%;
+  }
+
+  figure:first-of-type {
+    margin: 0 0 calc(0.5 * var(--gap)) 0;
+  }
+
+  figure:not(:first-of-type, :last-of-type) {
+    margin: calc(0.5 * var(--gap)) 0;
+  }
+
+  figure:last-of-type {
+    margin: calc(0.5 * var(--gap)) 0 0 0;
+  }
+
+  figure:has(figcaption) picture img {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
   picture {
     display: block;
     height: fit-content;
     margin: 0;
     position: relative;
-    width: fit-content;
-  }
-
-  picture.feature {
-    margin: 2rem;
+    width: 100%;
   }
 
   picture::before {
@@ -102,6 +141,7 @@ let baseURL = `${PHOTOS_DIR}${post}/${index}`;
     object-fit: cover;
     transition: 0.2s ease all;
     vertical-align: top;
+    width: 100%;
   }
 
   picture img.feature {

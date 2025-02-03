@@ -29,6 +29,18 @@
   display: grid;
 }
 
+figure {
+  display: block;
+  margin: 0;
+}
+
+photo-album>markdown-content {
+  margin-bottom: 2rem !important;
+  max-width: var(--content-width);
+  grid-column: 1 / 3;
+  width: 100%;
+}
+
 html #photo-viewer[option] {
   overflow: hidden;
 }
