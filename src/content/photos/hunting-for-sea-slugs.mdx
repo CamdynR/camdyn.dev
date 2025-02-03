@@ -8,137 +8,15 @@ lenses: ['SMC Pentax-M 50mm F1.4']
 films: ['CineStill 50D']
 ---
 
+import { db, PhotosTable } from 'astro:db';
 import PhotoAlbum from '../../components/PhotoAlbum.astro';
 import Photo from '../../components/Photo.astro';
 
-<PhotoAlbum post="hunting-for-sea-slugs">
-  <Photo
-    index={6}
-    feature
-    prioritize
-    alt="Abby and Lucius crouched down in the La Jolla Tide Pools looking for sea creatures"
-  />
-  <Photo index={1} alt="Kate Sessions park overlooking Mission Bay" />
-  <Photo
-    index={2}
-    alt="A cold, gloomy, and wet overview of the la jolla tide pools"
-  />
-  <Photo
-    index={3}
-    feature
-    alt="Portrait of Lucius unamused with a giggling Abby in the background"
-  />
-  <Photo index={4} alt="Candid of Abby mid speech, did not turn out well" />
-  <Photo index={5} alt="Abby crouched over inspecting a small puddle" />
-  <Photo
-    index={7}
-    alt="A view towards the ocean with other beach goers in the distance"
-  />
-  <Photo
-    index={8}
-    alt="The backside of Lucius as they peer down in a small pool"
-  />
-  <Photo
-    index={9}
-    alt="Another shot of Lucius from behind from further away as they peer down"
-  />
-  <Photo
-    index={10}
-    alt="Abby carefully perched low on the edge of a rock as she scans for life"
-  />
-  <Photo
-    index={11}
-    alt="Similar to the previous photo, Abby carefully perches low on the edge of a rock as she scans for life"
-    feature
-  />
-  <Photo
-    index={12}
-    alt="Other tide pool-ers in the distance bracing against the wind as they carefully climb over rocks"
-  />
-  <Photo
-    index={13}
-    alt="A slightly out of focus shot of Lucius in the distance, closer to the ocean's edge"
-  />
-  <Photo
-    index={14}
-    alt="Yards and yards of hair-like seaweed strands cover wet rocks and pools, in the center a white bird with a small craned neck"
-  />
-  <Photo
-    index={15}
-    alt="A seagull scans the tidepools and seaweed for a midday lunch"
-  />
-  <Photo index={16} alt="Abby carefully navigating some slippery rocks" />
-  <Photo index={17} alt="Lucius, a little bored, staring off in the distance" />
-  <Photo
-    index={18}
-    alt="A marine bioligist we met that day picking up a sea slug to place in a bucket"
-  />
-  <Photo
-    index={19}
-    alt="A glock of birds in the distance on the edge of the tide pools close to the ocean"
-  />
-  <Photo
-    index={20}
-    alt="Lucius gives an upset glare at the camera, unamused at having their picture taken"
-  />
-  <Photo
-    index={21}
-    alt="Lucius and Abby poke and prod the small tide pools with sticks they found"
-  />
-  <Photo
-    index={22}
-    alt="Lucius glances back to see what I'm up to but finds themselves with a facefull of wind"
-  />
-  <Photo
-    index={23}
-    alt="Lucius stares into the wind much like a sailor, with wind blowing their hair back"
-  />
-  <Photo
-    index={24}
-    feature
-    alt="Lucius stands for a portrait, brushing their hair out of their face with their hand"
-  />
-  <Photo
-    index={25}
-    alt="Lucius and Abby peer down together to look  at a sea slug they found"
-  />
-  <Photo
-    index={26}
-    alt="Million dollar La Jollan mansions on the edge of small bluffs off in the distance, in between are craggy wet rocks"
-  />
-  <Photo index={27} alt="More houses I'll never be able to afford" />
-  <Photo
-    index={28}
-    alt="A cold, gray, wet ocean scene with small 2 foot waves lapping the shore"
-  />
-  <Photo
-    index={29}
-    alt="Lucius, giddy with themselves, doing a funny strut back towards me"
-  />
-  <Photo
-    index={30}
-    alt="Abby and Lucius perched on a tall rock peering into a deep crevice"
-  />
-  <Photo
-    index={31}
-    feature
-    alt="Abby with an intense eye and smile holds a stick she found as she looks for more slugs"
-  />
-  <Photo index={32} alt="Lucius squatting on a rock unamused" />
-  <Photo
-    index={33}
-    alt="Lucius and Abby peer down together to look  for more creatures"
-  />
-  <Photo
-    index={35}
-    feature
-    alt="An assortment of marine hobbyists, explorative children, and tired parents dot the scene off in the distance"
-  />
-  <Photo index={34} alt="Lucius and Abby continuing the search for life" />
-  <Photo index={36} alt="A tall rock jutts from the ground" />
-  <Photo
-    index={37}
-    alt="Abby getting into a deep pose to see if anything is under a rock"
-    feature
-  />
-</PhotoAlbum>
+{
+await db.select({
+album: 'hunting-for-sea-slugs'
+}).from(PhotosTable)
+.map((photoData, i) => (
+
+<Photo index={i + 1} alt={photoData.alt} />
+)) }
